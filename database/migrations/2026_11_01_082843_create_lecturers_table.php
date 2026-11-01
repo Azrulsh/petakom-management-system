@@ -13,11 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('calendar_records', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('title');
-            $table->dateTime('start');
-            $table->dateTime('end');
+         Schema::create('lecturers', function (Blueprint $table) {
+            $table->id();
+
+            $table->string('staff_number')->unique();
+            $table->string('full_name');
+            $table->string('email')->unique();
+            $table->string('phone')->nullable();
+            $table->string('department');
+
+            $table->string('status')->default('active');
+
             $table->timestamps();
         });
     }
@@ -29,6 +35,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('calendar_records');
+        Schema::dropIfExists('lecturers');
     }
 };
