@@ -1,5 +1,4 @@
-
-@extends('layouts.registration')tration')
+@extends('layouts.header-sidebar')tration')
 
 @section('content')
 

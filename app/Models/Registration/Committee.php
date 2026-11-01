@@ -4,7 +4,6 @@ namespace App\Models\Registration;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Registration\Student;
 
 class Committee extends Model
 {
@@ -18,6 +17,11 @@ class Committee extends Model
         'status',
     ];
 
+    protected $casts = [
+        'appointed_at' => 'date',
+    ];
+
+    // Committee belongs to a Student
     public function student()
     {
         return $this->belongsTo(Student::class);

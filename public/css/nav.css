@@ -52,3 +52,13 @@
 .wrapper .top{
   margin-right: 250px
  }
+
+ /* Remove underline from sidebar navigation */
+.wrapper .sidebar ul li a,
+.wrapper .sidebar ul li a:link,
+.wrapper .sidebar ul li a:visited,
+.wrapper .sidebar ul li a:hover,
+.wrapper .sidebar ul li a:focus,
+.wrapper .sidebar ul li a:active {
+    text-decoration: none !important;
+}

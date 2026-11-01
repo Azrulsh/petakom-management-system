@@ -1,5 +1,4 @@
-
-@extends('layouts.registration')
+@extends('layouts.header-sidebar')
 
 @section('content')
 
