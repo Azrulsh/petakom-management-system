@@ -14,29 +14,30 @@ class CheckRole
     ) {
         $user = $request->user();
 
+        // Check authentication
         if (!$user) {
             return redirect()->route('login');
         }
 
-        // Admin has full access.
+        // Admin has full access
         if ($user->isAdmin()) {
             return $next($request);
         }
 
         foreach ($roles as $role) {
 
-            // Committee membership is checked
-            // through the Student relationship.
+            // Committee access:
+            // Student with active committee membership
             if ($role === 'committee') {
 
-                if ($user->isActiveCommitteeMember()) {
+                if ($user->isCommittee()) {
                     return $next($request);
                 }
 
                 continue;
             }
 
-            // Normal role verification.
+            // Normal role verification
             if ($user->hasRole($role)) {
                 return $next($request);
             }

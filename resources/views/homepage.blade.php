@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
@@ -10,16 +9,14 @@
     <title>PETAKOM Management System</title>
 
     <!-- Google Fonts -->
-    <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700;800&display=swap"
-          rel="stylesheet">
+    <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Existing CSS -->
+    <!-- CSS -->
     <link href="/css/style.css" rel="stylesheet">
     <link href="/css/nav.css" rel="stylesheet">
 
     <!-- Font Awesome -->
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
     <style>
 
@@ -41,7 +38,6 @@
             display: flex;
             flex-direction: column;
         }
-
 
         /* =====================================
            HEADER
@@ -75,7 +71,6 @@
             letter-spacing: 2px;
             margin-top: 3px;
         }
-
 
         /* =====================================
            LOGIN / DASHBOARD BUTTON
@@ -126,7 +121,6 @@
             color: #8B0000;
         }
 
-
         /* =====================================
            MAIN CONTENT
         ===================================== */
@@ -138,7 +132,6 @@
             padding: 65px 30px;
             flex: 1;
         }
-
 
         /* =====================================
            WELCOME SECTION
@@ -170,7 +163,6 @@
             line-height: 1.7;
         }
 
-
         /* =====================================
            MENU GRID
         ===================================== */
@@ -181,7 +173,6 @@
             gap: 24px;
             align-items: stretch;
         }
-
 
         /* =====================================
            MENU CARDS
@@ -215,7 +206,6 @@
             z-index: 2;
         }
 
-
         /* =====================================
            MENU ICON
         ===================================== */
@@ -240,7 +230,6 @@
             color: #FFFFFF;
         }
 
-
         /* =====================================
            MENU TEXT
         ===================================== */
@@ -258,7 +247,6 @@
             line-height: 1.6;
             margin-bottom: 0;
         }
-
 
         /* =====================================
            REGISTRATION DROPDOWN
@@ -345,7 +333,6 @@
             text-align: center;
         }
 
-
         /* =====================================
            GUEST MESSAGE
         ===================================== */
@@ -393,7 +380,6 @@
             text-decoration: none;
         }
 
-
         /* =====================================
            FOOTER
         ===================================== */
@@ -405,7 +391,6 @@
             padding: 20px;
             font-size: 13px;
         }
-
 
         /* =====================================
            TABLET RESPONSIVE
@@ -419,7 +404,6 @@
             }
 
         }
-
 
         /* =====================================
            MOBILE RESPONSIVE
@@ -487,7 +471,6 @@
 
 </head>
 
-
 <body>
 
     <!-- =====================================
@@ -507,7 +490,6 @@
 
         </div>
 
-
         <!-- LOGIN / DASHBOARD -->
 
         @if (Route::has('login'))
@@ -516,20 +498,16 @@
 
                 @auth
 
-                    <a href="{{ url('/dashboard') }}">
-                        <i class="fas fa-user-circle"></i>
-                        Dashboard
-                    </a>
-
                     <form method="POST"
-                          action="{{ route('logout') }}"
-                          class="logout-form">
+                    action="{{ route('logout') }}"
+                    class="logout-form">
 
-                        @csrf
+                    @csrf
 
-                        <button type="submit" class="logout-button">
-                            Log out
-                        </button>
+                    <button type="submit" class="logout-button">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Logout
+                    </button>
 
                     </form>
 
@@ -548,13 +526,11 @@
 
     </header>
 
-
     <!-- =====================================
          MAIN CONTENT
     ===================================== -->
 
     <main class="home-main">
-
 
         <!-- =====================================
              WELCOME SECTION
@@ -587,7 +563,6 @@
             @endauth
 
         </section>
-
 
         <!-- =====================================
              ROLE-BASED MAIN MENU
@@ -631,9 +606,7 @@
 
             @endphp
 
-
             <div class="home-container">
-
 
                 <!-- =================================
                      1. REGISTRATION
@@ -686,7 +659,6 @@
 
                 @endif
 
-
                 <!-- =================================
                      2. ACTIVITY
                      ADMIN & COMMITTEE
@@ -710,7 +682,6 @@
                     </a>
 
                 @endif
-
 
                 <!-- =================================
                      3. CALENDAR
@@ -736,7 +707,6 @@
 
                 @endif
 
-
                 <!-- =================================
                      4. PROPOSAL
                      ALL PETAKOM ROLES
@@ -744,8 +714,11 @@
 
                 @if($canSeeProposal)
 
-                    <a href="{{ route('manage-proposal.proposals.index') }}"
-                       class="home-card">
+                    
+                    <a href="{{ auth()->user()->isLecturer() || auth()->user()->isCoordinator()
+                        ? route('proposal-approvals.index')
+                        : route('manage-proposal.proposals.index') }}"
+                    class="home-card">
 
                         <div class="home-icon">
                             <i class="fas fa-file-alt"></i>
@@ -760,7 +733,6 @@
                     </a>
 
                 @endif
-
 
                 <!-- =================================
                      5. COMMITTEE ELECTION
@@ -785,7 +757,6 @@
                     </a>
 
                 @endif
-
 
                 <!-- =================================
                      6. BULLETIN
@@ -814,9 +785,7 @@
 
             </div>
 
-
         @else
-
 
             <!-- =================================
                  GUEST ACCESS
@@ -833,18 +802,11 @@
                     calendar, proposals, committee elections and bulletin.
                 </p>
 
-                <a href="{{ route('login') }}" class="guest-login">
-                    <i class="fas fa-sign-in-alt"></i>
-                    Login to PETAKOM
-                </a>
-
             </div>
 
         @endauth
 
-
     </main>
-
 
     <!-- =====================================
          FOOTER
@@ -856,7 +818,6 @@
         All Rights Reserved.
 
     </footer>
-
 
 </body>
 

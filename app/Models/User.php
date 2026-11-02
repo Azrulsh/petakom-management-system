@@ -12,6 +12,7 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Jetstream\HasTeams;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Proposal\ProposalReview;
 
 class User extends Authenticatable
 {
@@ -116,9 +117,9 @@ public function isCoordinator(): bool
 
 public function isCommittee(): bool
 {
-    return $this->isActiveCommitteeMember();
+    return $this->isStudent()
+        && $this->isActiveCommitteeMember();
 }
-
 
     /**
      * User has one Student profile.
@@ -154,4 +155,13 @@ public function isCommittee(): bool
             ->exists();
     }
 
+    // Proposal reviews performed by this user
+    public function proposalReviews()
+    {
+        return $this->hasMany(
+            ProposalReview::class,
+            'reviewer_id'
+        );
+    }
+    
 }

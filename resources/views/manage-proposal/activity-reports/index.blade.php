@@ -5,33 +5,78 @@
 
 @section('content')
 
+@php
+    $user = auth()->user();
+
+    $isAdmin = $user->isAdmin();
+
+    $isCommittee = $user->isCommittee()
+        || $user->isActiveCommitteeMember();
+
+    $isReviewer = $isAdmin
+        || $user->isLecturer()
+        || $user->isCoordinator();
+@endphp
+
 <div class="container-fluid">
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    {{-- PAGE HEADER --}}
+   <div class="d-flex justify-content-between align-items-center mb-4">
 
-        <div>
-            <h3 class="font-weight-bold">Activity Reports</h3>
+    <div>
+        <h3 class="font-weight-bold">Activity Reports</h3>
 
-            <p class="text-muted">
-                Manage reports and evaluate completed PETAKOM activities.
-            </p>
-        </div>
+        <p class="text-muted">
+            Manage reports and evaluate completed PETAKOM activities.
+        </p>
+    </div>
 
-        <a href="{{ route('manage-proposal.activity-reports.create') }}"
-           class="btn btn-danger">
-            + Create Activity Report
-        </a>
+    <div class="d-flex" style="gap: 10px;">
+
+        @if($isReviewer)
+
+            <a href="{{ route('manage-proposal.activity-reports.history') }}"
+               class="btn btn-outline-dark">
+                <i class="fas fa-history"></i>
+                Approval History
+            </a>
+
+        @endif
+
+        @if($isAdmin || $isCommittee)
+
+            <a href="{{ route('manage-proposal.activity-reports.create') }}"
+               class="btn btn-danger">
+                + Create Activity Report
+            </a>
+
+        @endif
 
     </div>
 
+</div>
 
+    {{-- SUCCESS MESSAGE --}}
     @if(session('success'))
-        <div class="alert alert-success">
+        <div class="alert alert-success alert-dismissible fade show">
             {{ session('success') }}
+            <button type="button" class="close" data-dismiss="alert">
+                <span>&times;</span>
+            </button>
         </div>
     @endif
 
+    {{-- ERROR MESSAGE --}}
+    @if(session('error'))
+        <div class="alert alert-danger alert-dismissible fade show">
+            {{ session('error') }}
+            <button type="button" class="close" data-dismiss="alert">
+                <span>&times;</span>
+            </button>
+        </div>
+    @endif
 
+    {{-- ACTIVITY REPORT TABLE --}}
     <div class="card shadow-sm">
 
         <div class="card-header bg-white">
@@ -45,22 +90,48 @@
                 <table class="table table-bordered table-hover">
 
                     <thead class="thead-light">
-
                         <tr>
                             <th>No.</th>
                             <th>Activity Title</th>
                             <th>Related Proposal</th>
                             <th>Activity Date</th>
+                            <th>Prepared By</th>
                             <th>Attendance</th>
                             <th>Expenditure</th>
+                            <th>Status</th>
                             <th>Action</th>
                         </tr>
-
                     </thead>
 
                     <tbody>
 
                         @forelse($activityReports as $report)
+
+                            @php
+                                $canManageReport = $isAdmin ||
+                                    (
+                                        $isCommittee &&
+                                        (int) $report->created_by === (int) $user->id
+                                    );
+
+                                $canEditReport = $canManageReport &&
+                                    (
+                                        $isAdmin ||
+                                        in_array($report->status, ['draft', 'rejected'], true)
+                                    );
+
+                                $canSubmitReport = $canManageReport &&
+                                    in_array($report->status, ['draft', 'rejected'], true);
+
+                                $statusClasses = [
+                                    'draft' => 'secondary',
+                                    'pending' => 'warning',
+                                    'approved' => 'success',
+                                    'rejected' => 'danger',
+                                ];
+
+                                $statusClass = $statusClasses[$report->status] ?? 'secondary';
+                            @endphp
 
                             <tr>
 
@@ -81,6 +152,10 @@
                                 </td>
 
                                 <td>
+                                    {{ $report->prepared_by }}
+                                </td>
+
+                                <td>
                                     {{ number_format($report->actual_attendance) }}
                                 </td>
 
@@ -88,32 +163,80 @@
                                     RM {{ number_format($report->actual_expenditure, 2) }}
                                 </td>
 
+                                {{-- STATUS --}}
+                                <td>
+                                    <span class="badge badge-{{ $statusClass }}">
+                                        {{ ucfirst($report->status) }}
+                                    </span>
+                                </td>
+
+                                {{-- ACTIONS --}}
                                 <td>
 
-                                    <a href="{{ route('manage-proposal.activity-reports.show', $report->id) }}"
-                                       class="btn btn-sm btn-info">
-                                        View
-                                    </a>
+                                    <div class="d-flex flex-wrap" style="gap:5px;">
 
-                                    <a href="{{ route('manage-proposal.activity-reports.edit', $report->id) }}"
-                                       class="btn btn-sm btn-warning">
-                                        Edit
-                                    </a>
+                                        {{-- VIEW / REVIEW --}}
+                                        <a href="{{ route('manage-proposal.activity-reports.show', $report->id) }}"
+                                           class="btn btn-sm btn-info">
 
-                                    <form action="{{ route('manage-proposal.activity-reports.destroy', $report->id) }}"
-                                          method="POST"
-                                          class="d-inline"
-                                          onsubmit="return confirm('Delete this activity report?')">
+                                            @if($isReviewer && $report->status === 'pending')
+                                                Review
+                                            @else
+                                                View
+                                            @endif
 
-                                        @csrf
-                                        @method('DELETE')
+                                        </a>
 
-                                        <button type="submit"
-                                                class="btn btn-sm btn-danger">
-                                            Delete
-                                        </button>
+                                        {{-- EDIT --}}
+                                        @if($canEditReport)
 
-                                    </form>
+                                            <a href="{{ route('manage-proposal.activity-reports.edit', $report->id) }}"
+                                               class="btn btn-sm btn-warning">
+                                                Edit
+                                            </a>
+
+                                        @endif
+
+                                        {{-- SUBMIT / RESUBMIT --}}
+                                        @if($canSubmitReport)
+
+                                            <form action="{{ route('manage-proposal.activity-reports.submit', $report->id) }}"
+                                                  method="POST"
+                                                  onsubmit="return confirm('Submit this activity report for approval?')">
+
+                                                @csrf
+
+                                                <button type="submit"
+                                                        class="btn btn-sm btn-primary">
+
+                                                    {{ $report->status === 'rejected' ? 'Resubmit' : 'Submit' }}
+
+                                                </button>
+
+                                            </form>
+
+                                        @endif
+
+                                        {{-- DELETE --}}
+                                        @if($canEditReport)
+
+                                            <form action="{{ route('manage-proposal.activity-reports.destroy', $report->id) }}"
+                                                  method="POST"
+                                                  onsubmit="return confirm('Delete this activity report?')">
+
+                                                @csrf
+                                                @method('DELETE')
+
+                                                <button type="submit"
+                                                        class="btn btn-sm btn-danger">
+                                                    Delete
+                                                </button>
+
+                                            </form>
+
+                                        @endif
+
+                                    </div>
 
                                 </td>
 
@@ -122,8 +245,11 @@
                         @empty
 
                             <tr>
-                                <td colspan="7" class="text-center text-muted py-4">
+                                <td colspan="9"
+                                    class="text-center text-muted py-4">
+
                                     No activity reports available.
+
                                 </td>
                             </tr>
 
@@ -135,6 +261,7 @@
 
             </div>
 
+            {{-- PAGINATION --}}
             <div class="d-flex justify-content-end">
                 {{ $activityReports->links() }}
             </div>

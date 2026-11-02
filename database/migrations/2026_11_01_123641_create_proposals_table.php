@@ -6,15 +6,16 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
+    public function up(): void
     {
         Schema::create('proposals', function (Blueprint $table) {
+
             $table->id();
+
+            // Proposal Owner
+            $table->foreignId('user_id')
+                ->constrained('users')
+                ->restrictOnDelete();
 
             // Proposal Information
             $table->string('title');
@@ -44,12 +45,7 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
+    public function down(): void
     {
         Schema::dropIfExists('proposals');
     }

@@ -41,6 +41,25 @@ return new class extends Migration
             $table->string('prepared_by');
             $table->string('status', 30)->default('draft');
 
+            // Report Creator
+            $table->foreignId('created_by')
+                ->nullable()
+                ->constrained('users')
+                ->nullOnDelete();
+
+            // Submission Information
+            $table->timestamp('submitted_at')->nullable();
+
+            // Approval Information
+            $table->text('review_remarks')->nullable();
+
+            $table->foreignId('reviewed_by')
+                ->nullable()
+                ->constrained('users')
+                ->nullOnDelete();
+
+            $table->timestamp('reviewed_at')->nullable();
+
             $table->timestamps();
         });
     }

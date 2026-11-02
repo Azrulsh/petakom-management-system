@@ -12,7 +12,7 @@
     <!-- Fonts -->
     <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 
-    <!-- PETAKOM CSS -->
+    <!-- CSS -->
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <link href="{{ asset('css/nav.css') }}" rel="stylesheet">
     <link href="{{ asset('css/body.css') }}" rel="stylesheet">
@@ -113,28 +113,80 @@
                 )
 
                     <li class="has-submenu">
-
+                                                
                         <a href="#">Proposal</a>
 
                         <ul class="submenu">
 
-                            <li>
-                                <a href="{{ route('manage-proposal.proposals.index') }}">
-                                    Activity Proposal
-                                </a>
-                            </li>
+                            {{-- ACTIVITY PROPOSAL --}}
+                            {{-- Admin and Student --}}
 
-                            <li>
-                                <a href="{{ route('manage-proposal.activity-reports.index') }}">
-                                    Activity Reports
-                                </a>
-                            </li>
+                            @if(auth()->check() &&
+                                (auth()->user()->isAdmin() ||
+                                auth()->user()->isStudent()))
+
+                                <li>
+                                    <a href="{{ route('manage-proposal.proposals.index') }}">
+                                        <i class="fas fa-file-alt"></i>
+                                        Activity Proposal
+                                    </a>
+                                </li>
+
+                            @endif
+
+
+                            {{-- ACTIVITY REPORTS --}}
+                            {{-- Admin, Committee, Lecturer and Coordinator --}}
+
+                            @if(auth()->check() &&
+                                (auth()->user()->isAdmin() ||
+                                auth()->user()->isActiveCommitteeMember() ||
+                                auth()->user()->isLecturer() ||
+                                auth()->user()->isCoordinator()))
+
+                                <li>
+                                    <a href="{{ route('manage-proposal.activity-reports.index') }}">
+                                        <i class="fas fa-clipboard-list"></i>
+                                        Activity Reports
+                                    </a>
+                                </li>
+
+                            @endif
+
+
+                            {{-- GENERATE REPORTS --}}
 
                             <li>
                                 <a href="{{ route('manage-proposal.reports.index') }}">
+                                    <i class="fas fa-chart-bar"></i>
                                     Generate Reports
                                 </a>
                             </li>
+
+
+                            {{-- APPROVAL MANAGEMENT --}}
+                            {{-- Admin, Lecturer and Coordinator --}}
+
+                            @if(auth()->check() &&
+                                (auth()->user()->isAdmin() ||
+                                auth()->user()->isLecturer() ||
+                                auth()->user()->isCoordinator()))
+
+                                <li>
+                                    <a href="{{ route('proposal-approvals.index') }}">
+                                        <i class="fas fa-clipboard-check"></i>
+                                        Pending Approvals
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="{{ route('proposal-approvals.history.index') }}">
+                                        <i class="fas fa-history"></i>
+                                        Approval History
+                                    </a>
+                                </li>
+
+                            @endif
 
                         </ul>
 
