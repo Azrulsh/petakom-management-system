@@ -146,6 +146,7 @@ use App\Http\Controllers\Proposal\ProposalController;
 use App\Http\Controllers\Proposal\ActivityReportController;
 use App\Http\Controllers\Proposal\ProposalReportController;
 
+use App\Http\Controllers\Activity\ActivityController;
 
 // =====================================================
 // PUBLIC ROUTES
@@ -190,11 +191,43 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/createcalendar', [CalendarController::class, 'create'])
         ->name('calendar.create');
+    
+    Route::put('/updatecalendar', [CalendarController::class, 'update'])
+        ->name('calendar.update');
 
     Route::post('/deletecalendar', [CalendarController::class, 'destroy'])
         ->name('calendar.destroy');
 
+    
+    // =================================================
+    // MANAGE ACTIVITIES
+    // =================================================
 
+    // All authenticated users can view activities
+    Route::get('/activities', [ActivityController::class, 'index'])
+        ->name('manage-activity.index');
+
+    Route::get('/activities/create', [ActivityController::class, 'create'])
+        ->name('manage-activity.create');
+
+    Route::post('/activities', [ActivityController::class, 'store'])
+        ->name('manage-activity.store');
+
+    Route::get('/activities/{activity}', [ActivityController::class, 'show'])
+        ->name('manage-activity.show');
+
+    Route::get('/activities/{activity}/edit', [ActivityController::class, 'edit'])
+        ->name('manage-activity.edit');
+
+    Route::put('/activities/{activity}', [ActivityController::class, 'update'])
+        ->name('manage-activity.update');
+
+    Route::delete('/activities/{activity}', [ActivityController::class, 'destroy'])
+        ->name('manage-activity.destroy');
+    
+    Route::patch('/activities/{activity}/status', [ActivityController::class, 'updateStatus'])
+        ->name('manage-activity.update-status');
+        
     // =================================================
     // MANAGE REGISTRATION
     // Admin only.
@@ -343,6 +376,6 @@ Route::middleware(['auth', 'role:lecturer,coordinator'])
 
     });
 
-
+    
 
 });

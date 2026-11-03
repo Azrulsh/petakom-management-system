@@ -11,13 +11,21 @@ return new class extends Migration
      *
      * @return void
      */
+   
     public function up()
     {
         Schema::create('calendars', function (Blueprint $table) {
-            $table->increments('id');
+            $table->id();
+
+            // Reminder owner
+            $table->foreignId('user_id')
+                ->constrained('users')
+                ->cascadeOnDelete();
+
             $table->string('title');
             $table->dateTime('start');
             $table->dateTime('end');
+
             $table->timestamps();
         });
     }

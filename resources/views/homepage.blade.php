@@ -583,7 +583,7 @@
                 // Admin can access every module.
                 $canSeeRegistration = $isAdmin;
 
-                $canSeeActivity = $isAdmin || $isCommittee;
+                $canSeeActivity = $isAdmin || $isCommittee || $isStudent;
 
                 $canSeeCalendar = true;
 
@@ -666,8 +666,8 @@
 
                 @if($canSeeActivity)
 
-                    <a href="{{ url('Manage Activity') }}"
-                       class="home-card">
+                    <a href="{{ route('manage-activity.index') }}"
+                    class="home-card">
 
                         <div class="home-icon">
                             <i class="fas fa-tasks"></i>
@@ -682,6 +682,7 @@
                     </a>
 
                 @endif
+
 
                 <!-- =================================
                      3. CALENDAR

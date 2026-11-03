@@ -8,5 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Calendar extends Model
 {
     use HasFactory;
-    protected $fillable = ['title','start','end'];
+    protected $fillable = ['user_id','title','start','end'];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

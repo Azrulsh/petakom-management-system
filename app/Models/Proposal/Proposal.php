@@ -59,4 +59,10 @@ class Proposal extends Model
     {
         return $this->belongsTo(User::class, 'reviewed_by');
     }
+
+    // Related Activity
+    public function activity()
+    {
+        return $this->hasOne(\App\Models\Activity\Activity::class);
+    }
 }
