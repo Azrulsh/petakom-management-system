@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Registration;
+namespace App\Http\Controllers\Election;
 
 use App\Http\Controllers\Controller;
 use App\Models\Registration\Student;
@@ -32,7 +32,7 @@ class CommitteeController extends Controller
             ->appends($request->query());
 
         return view(
-            'manage-registration.committees.index',
+            'manage-election.committees.index',
             compact('members')
         );
     }
@@ -48,7 +48,7 @@ class CommitteeController extends Controller
             ->get();
 
         return view(
-            'manage-registration.committees.create',
+            'manage-election.committees.create',
             compact('students')
         );
     }
@@ -105,7 +105,7 @@ class CommitteeController extends Controller
         Committee::create($validated);
 
         return redirect()
-            ->route('manage-registration.committees.index')
+            ->route('manage-election.committees.index')
             ->with(
                 'success',
                 'Committee member registered successfully.'
@@ -120,7 +120,7 @@ class CommitteeController extends Controller
         $committee->load('student.user');
 
         return view(
-            'manage-registration.committees.show',
+            'manage-election.committees.show',
             compact('committee')
         );
     }
@@ -137,7 +137,7 @@ class CommitteeController extends Controller
         $committee->load('student.user');
 
         return view(
-            'manage-registration.committees.edit',
+            'manage-election.committees.edit',
             compact('committee', 'students')
         );
     }
@@ -193,7 +193,7 @@ class CommitteeController extends Controller
         $committee->update($validated);
 
         return redirect()
-            ->route('manage-registration.committees.index')
+            ->route('manage-election.committees.index')
             ->with(
                 'success',
                 'Committee member updated successfully.'
@@ -209,7 +209,7 @@ class CommitteeController extends Controller
         $committee->delete();
 
         return redirect()
-            ->route('manage-registration.committees.index')
+            ->route('manage-election.committees.index')
             ->with(
                 'success',
                 'Committee membership deleted successfully.'

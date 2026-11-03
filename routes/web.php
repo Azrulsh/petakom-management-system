@@ -140,7 +140,8 @@ use App\Http\Controllers\CalendarController;
 
 use App\Http\Controllers\Registration\StudentController;
 use App\Http\Controllers\Registration\LecturerController;
-use App\Http\Controllers\Registration\CommitteeController;
+
+use App\Http\Controllers\Election\CommitteeController;
 
 use App\Http\Controllers\Proposal\ProposalController;
 use App\Http\Controllers\Proposal\ActivityReportController;
@@ -155,7 +156,6 @@ use App\Http\Controllers\Activity\ActivityController;
 Route::view('/', 'homepage')->name('homepage');
 
 Route::redirect('/homepage', '/');
-
 
 // =====================================================
 // AUTHENTICATED DASHBOARD ROUTES
@@ -173,13 +173,11 @@ Route::middleware([
 
 });
 
-
 // =====================================================
 // AUTHENTICATED MODULES
 // =====================================================
 
 Route::middleware(['auth'])->group(function () {
-
 
     // =================================================
     // MANAGE CALENDAR
@@ -242,8 +240,6 @@ Route::middleware(['auth'])->group(function () {
 
             Route::resource('lecturers', LecturerController::class);
 
-            Route::resource('committees', CommitteeController::class);
-
         });
 
 
@@ -277,7 +273,19 @@ Route::middleware(['auth'])->group(function () {
 
         });
 
+        // ==========================================
+        // MANAGE COMMITTEE ELECTION
+        // ==========================================
 
+        Route::middleware(['role:admin'])
+            ->prefix('committee-election')
+            ->name('manage-election.')
+            ->group(function () {
+
+                // Committee Registration / Appointment
+                Route::resource('committees', CommitteeController::class);
+
+            });
     
 /*
 |--------------------------------------------------------------------------
@@ -325,8 +333,6 @@ Route::middleware(['role:committee,lecturer,coordinator'])
 
     });
 
-    
-
 // ==========================================
 // PROPOSAL APPROVAL ROUTES
 // LECTURER & COORDINATOR ONLY
@@ -373,9 +379,6 @@ Route::middleware(['auth', 'role:lecturer,coordinator'])
             'historyShow'
         ])->name('history.show');
 
-
-    });
-
-    
+    }); 
 
 });

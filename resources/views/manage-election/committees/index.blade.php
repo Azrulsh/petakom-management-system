@@ -13,7 +13,7 @@
             </p>
         </div>
 
-        <a href="{{ route('manage-registration.committees.create') }}"
+        <a href="{{ route('manage-election.committees.create') }}"
            class="btn btn-primary">
             + Add Committee Member
         </a>
@@ -39,7 +39,7 @@
         <div class="card-body">
 
             <form method="GET"
-                  action="{{ route('manage-registration.committees.index') }}"
+                  action="{{ route('manage-election.committees.index') }}"
                   class="row g-3 mb-4">
 
                 <div class="col-md-4">
@@ -153,17 +153,17 @@
 
                                 <div class="d-flex gap-1">
 
-                                    <a href="{{ route('manage-registration.committees.show', $member->id) }}"
+                                    <a href="{{ route('manage-election.committees.show', $member->id) }}"
                                        class="btn btn-sm btn-info text-white">
                                         View
                                     </a>
 
-                                    <a href="{{ route('manage-registration.committees.edit', $member->id) }}"
+                                    <a href="{{ route('manage-election.committees.edit', $member->id) }}"
                                        class="btn btn-sm btn-warning">
                                         Edit
                                     </a>
 
-                                    <form action="{{ route('manage-registration.committees.destroy', $member->id) }}"
+                                    <form action="{{ route('manage-election.committees.destroy', $member->id) }}"
                                           method="POST"
                                           onsubmit="return confirm('Delete this committee record?')">
 

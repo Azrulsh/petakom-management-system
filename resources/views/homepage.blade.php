@@ -648,7 +648,7 @@
                                 Lecturer Registration
                             </a>
 
-                            <a href="{{ route('manage-registration.committees.create') }}">
+                            <a href="{{ route('manage-election.committees.create') }}">
                                 <i class="fas fa-users"></i>
                                 Committee Registration
                             </a>
@@ -739,11 +739,11 @@
                      5. COMMITTEE ELECTION
                      ADMIN & COMMITTEE
                 ================================== -->
-
+            
                 @if($canSeeElection)
 
-                    <a href="{{ url('Manage Committee Election/StudCandidateListPage') }}"
-                       class="home-card">
+                    <a href="{{ route('manage-election.committees.index') }}"
+                    class="home-card">
 
                         <div class="home-icon">
                             <i class="fas fa-vote-yea"></i>

@@ -77,7 +77,7 @@
                             </li>
 
                             <li>
-                                <a href="{{ route('manage-registration.committees.index') }}">
+                                <a href="{{ route('manage-election.committees.index') }}">
                                     Committee Registration
                                 </a>
                             </li>

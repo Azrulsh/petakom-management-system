@@ -3,8 +3,8 @@
 @endphp
 
 <form action="{{ $committee
-    ? route('manage-registration.committees.update', $committee->id)
-    : route('manage-registration.committees.store') }}"
+    ? route('manage-election.committees.update', $committee->id)
+    : route('manage-election.committees.store') }}"
     method="POST">
 
     @csrf
@@ -141,7 +141,7 @@
 
     <div class="d-flex justify-content-end gap-2">
 
-        <a href="{{ route('manage-registration.committees.index') }}"
+        <a href="{{ route('manage-election.committees.index') }}"
            class="btn btn-secondary">
             Cancel
         </a>
