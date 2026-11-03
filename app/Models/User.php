@@ -62,64 +62,63 @@ class User extends Authenticatable
         'profile_photo_url',
     ];
 
-    
-// ==========================================
-// PETAKOM USER ROLES
-// ==========================================
+    // ==========================================
+    // PETAKOM USER ROLES
+    // ==========================================
 
-public const ROLE_ADMIN = 'admin';
+    public const ROLE_ADMIN = 'admin';
 
-public const ROLE_STUDENT = 'student';
+    public const ROLE_STUDENT = 'student';
 
-public const ROLE_LECTURER = 'lecturer';
+    public const ROLE_LECTURER = 'lecturer';
 
-public const ROLE_COORDINATOR = 'coordinator';
-
-
-// ==========================================
-// GENERAL ROLE CHECK
-// ==========================================
-
-public function hasRole($roles): bool
-{
-    return in_array($this->role, (array) $roles, true);
-}
+    public const ROLE_COORDINATOR = 'coordinator';
 
 
-// ==========================================
-// SPECIFIC ROLE CHECK
-// ==========================================
+    // ==========================================
+    // GENERAL ROLE CHECK
+    // ==========================================
 
-public function isAdmin(): bool
-{
-    return $this->hasRole(self::ROLE_ADMIN);
-}
-
-public function isStudent(): bool
-{
-    return $this->hasRole(self::ROLE_STUDENT);
-}
-
-public function isLecturer(): bool
-{
-    return $this->hasRole(self::ROLE_LECTURER);
-}
-
-public function isCoordinator(): bool
-{
-    return $this->hasRole(self::ROLE_COORDINATOR);
-}
+    public function hasRole($roles): bool
+    {
+        return in_array($this->role, (array) $roles, true);
+    }
 
 
-// ==========================================
-// COMMITTEE MEMBERSHIP CHECK
-// ==========================================
+    // ==========================================
+    // SPECIFIC ROLE CHECK
+    // ==========================================
 
-public function isCommittee(): bool
-{
-    return $this->isStudent()
-        && $this->isActiveCommitteeMember();
-}
+    public function isAdmin(): bool
+    {
+        return $this->hasRole(self::ROLE_ADMIN);
+    }
+
+    public function isStudent(): bool
+    {
+        return $this->hasRole(self::ROLE_STUDENT);
+    }
+
+    public function isLecturer(): bool
+    {
+        return $this->hasRole(self::ROLE_LECTURER);
+    }
+
+    public function isCoordinator(): bool
+    {
+        return $this->hasRole(self::ROLE_COORDINATOR);
+    }
+
+
+    // ==========================================
+    // COMMITTEE MEMBERSHIP CHECK
+    // ==========================================
+
+    public function isCommittee(): bool
+    {
+        return $this->isStudent()
+            && $this->isActiveCommitteeMember();
+    }
 
     /**
      * User has one Student profile.
@@ -162,6 +161,12 @@ public function isCommittee(): bool
             ProposalReview::class,
             'reviewer_id'
         );
+    }
+ 
+    // User can create multiple bulletins
+    public function bulletins()
+    {
+        return $this->hasMany(Bulletin::class);
     }
     
 }

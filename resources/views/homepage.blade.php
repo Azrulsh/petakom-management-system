@@ -787,8 +787,8 @@
 
                 @if($canSeeBulletin)
 
-                    <a href="{{ url('Manage Committee Election/test') }}"
-                       class="home-card">
+                    <a href="{{ route('manage-bulletin.index') }}"
+                    class="home-card">
 
                         <div class="home-icon">
                             <i class="fas fa-bullhorn"></i>
@@ -797,13 +797,13 @@
                         <h3>Manage Bulletin</h3>
 
                         <p>
-                            Access PETAKOM announcements and latest information.
+                            View and manage PETAKOM and Faculty
+                            bulletins and announcements.
                         </p>
 
                     </a>
 
                 @endif
-
 
             </div>
 

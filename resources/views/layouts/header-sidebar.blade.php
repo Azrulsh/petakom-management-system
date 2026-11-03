@@ -215,9 +215,12 @@
                 </li>
 
                 <br>
-
+  
                 <li>
-                    <a href="#">Bulletin</a>
+                    <a href="{{ route('manage-bulletin.index') }}"
+                    class="{{ request()->routeIs('manage-bulletin.*') ? 'active' : '' }}">
+                        Bulletin
+                    </a>
                 </li>
 
             </ul>

@@ -134,23 +134,18 @@
 //     return 'Coordinator Access Granted';
 // })->middleware(['auth', 'role:coordinator']);
 
-
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CalendarController;
-
 use App\Http\Controllers\Registration\StudentController;
 use App\Http\Controllers\Registration\LecturerController;
-
 use App\Http\Controllers\Election\CommitteeController;
 use App\Http\Controllers\Election\ElectionController;
-
 use App\Http\Controllers\Proposal\ProposalController;
 use App\Http\Controllers\Proposal\ActivityReportController;
 use App\Http\Controllers\Proposal\ProposalReportController;
-
 use App\Http\Controllers\Activity\ActivityController;
-
 use App\Http\Controllers\Election\CandidateController;
+use App\Http\Controllers\BulletinController;
 
 // =====================================================
 // PUBLIC ROUTES
@@ -364,7 +359,51 @@ Route::middleware(['auth'])->group(function () {
                 });
 
             });
-  
+        
+        
+        /*
+        |--------------------------------------------------------------------------
+        | MODULE 6 — MANAGE BULLETIN
+        |--------------------------------------------------------------------------
+        */
+
+        Route::middleware(['auth'])
+            ->prefix('bulletins')
+            ->name('manage-bulletin.')
+            ->group(function () {
+
+                // View Bulletin List
+                Route::get('/', [BulletinController::class, 'index'])
+                    ->name('index');
+
+                Route::get('/create', [BulletinController::class, 'create'])
+                    ->name('create');
+                
+                Route::post('/', [BulletinController::class, 'store'])
+                    ->name('store');
+
+                Route::get('/{bulletin}', [BulletinController::class, 'show'])
+                    ->whereNumber('bulletin')
+                    ->name('show');
+
+                Route::get('/{bulletin}/edit', [BulletinController::class, 'edit'])
+                    ->whereNumber('bulletin')
+                    ->name('edit');
+                
+                Route::put('/{bulletin}', [BulletinController::class, 'update'])
+                    ->whereNumber('bulletin')
+                    ->name('update');
+                
+                Route::delete('/{bulletin}', [BulletinController::class, 'destroy'])
+                    ->whereNumber('bulletin')
+                    ->name('destroy');
+
+                Route::patch('/{bulletin}/status', [BulletinController::class, 'updateStatus'])
+                    ->whereNumber('bulletin')
+                    ->name('update-status');
+
+            });
+
 /*
 |--------------------------------------------------------------------------
 | ACTIVITY REPORT MANAGEMENT
