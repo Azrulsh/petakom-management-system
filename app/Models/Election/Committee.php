@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Models\Registration;
+namespace App\Models\Election;
 
+use App\Models\Registration\Student;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 

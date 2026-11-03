@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Election;
 
 use App\Http\Controllers\Controller;
 use App\Models\Registration\Student;
-use App\Models\Registration\Committee;
+use App\Models\Election\Committee;
 use Illuminate\Http\Request;
 
 class CommitteeController extends Controller

@@ -3,6 +3,8 @@
 namespace App\Models\Registration;
 
 use App\Models\User;
+use App\Models\Election\Candidate;
+use App\Models\Election\Committee;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -30,4 +32,11 @@ class Student extends Model
     {
         return $this->hasMany(Committee::class);
     }
+
+    // Student can participate in multiple elections
+    public function candidates()
+    {
+        return $this->hasMany(Candidate::class);
+    }
+    
 }

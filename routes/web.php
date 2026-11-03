@@ -142,12 +142,15 @@ use App\Http\Controllers\Registration\StudentController;
 use App\Http\Controllers\Registration\LecturerController;
 
 use App\Http\Controllers\Election\CommitteeController;
+use App\Http\Controllers\Election\ElectionController;
 
 use App\Http\Controllers\Proposal\ProposalController;
 use App\Http\Controllers\Proposal\ActivityReportController;
 use App\Http\Controllers\Proposal\ProposalReportController;
 
 use App\Http\Controllers\Activity\ActivityController;
+
+use App\Http\Controllers\Election\CandidateController;
 
 // =====================================================
 // PUBLIC ROUTES
@@ -277,16 +280,91 @@ Route::middleware(['auth'])->group(function () {
         // MANAGE COMMITTEE ELECTION
         // ==========================================
 
-        Route::middleware(['role:admin'])
+        // All authenticated users
+        Route::middleware(['auth'])
             ->prefix('committee-election')
             ->name('manage-election.')
             ->group(function () {
 
-                // Committee Registration / Appointment
-                Route::resource('committees', CommitteeController::class);
+                // Election List
+                Route::get('/', [ElectionController::class, 'index'])
+                    ->name('index');
+
+                Route::post('/', [ElectionController::class, 'store'])
+                    ->name('store');
+
+                Route::get('/{election}', [ElectionController::class, 'show'])
+                    ->whereNumber('election')
+                    ->name('show');
+
+                Route::get('/create', [ElectionController::class, 'create'])
+                    ->name('create');
+
+                Route::get('/{election}/edit', [ElectionController::class, 'edit'])
+                    ->whereNumber('election')
+                    ->name('edit');    
+                
+                Route::put('/{election}', [ElectionController::class, 'update'])
+                    ->whereNumber('election')
+                    ->name('update');
+
+                Route::delete('/{election}', [ElectionController::class, 'destroy'])
+                    ->whereNumber('election')
+                    ->name('destroy');
+                    
+                Route::patch('/{election}/status', [ElectionController::class, 'updateStatus'])
+                    ->whereNumber('election')
+                    ->name('update-status');
+                
+                    // ==========================================
+                    // CANDIDATE REGISTRATION
+                    // ==========================================
+
+                    // View candidates for a specific election
+                    Route::get('/{election}/candidates',
+                        [CandidateController::class, 'index'])
+                        ->whereNumber('election')
+                        ->name('candidates.index');
+                    
+                    Route::post('/{election}/candidates',
+                        [CandidateController::class, 'store'])
+                        ->whereNumber('election')
+                        ->name('candidates.store');
+
+
+                    Route::get('/{election}/candidates/create',
+                        [CandidateController::class, 'create'])
+                        ->whereNumber('election')
+                        ->name('candidates.create');
+
+                    // Approve / Reject Candidate
+                    Route::patch('/{election}/candidates/{candidate}/review',
+                        [CandidateController::class, 'review'])
+                        ->whereNumber(['election', 'candidate'])
+                        ->middleware('role:admin,coordinator')
+                        ->name('candidates.review');
+                    
+                    Route::patch('/{election}/candidates/{candidate}/withdraw',
+                        [CandidateController::class, 'withdraw'])
+                        ->whereNumber(['election', 'candidate'])
+                        ->name('candidates.withdraw');
+                    
+                    // Appoint approved candidate as PETAKOM Committee
+                    Route::post('/{election}/candidates/{candidate}/appoint',
+                        [CandidateController::class, 'appoint'])
+                        ->whereNumber(['election', 'candidate'])
+                        ->middleware('role:admin')
+                        ->name('candidates.appoint');
+                                    
+                // Admin Only - Committee Registration
+                Route::middleware(['role:admin'])->group(function () {
+
+                    Route::resource('committees', CommitteeController::class);
+
+                });
 
             });
-    
+  
 /*
 |--------------------------------------------------------------------------
 | ACTIVITY REPORT MANAGEMENT

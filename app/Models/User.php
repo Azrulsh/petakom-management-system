@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Models\Registration\Student;
-use App\Models\Registration\Committee;
+use App\Models\Election\Committee;
 //use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;

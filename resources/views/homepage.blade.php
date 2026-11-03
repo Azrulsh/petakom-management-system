@@ -648,11 +648,6 @@
                                 Lecturer Registration
                             </a>
 
-                            <a href="{{ route('manage-election.committees.create') }}">
-                                <i class="fas fa-users"></i>
-                                Committee Registration
-                            </a>
-
                         </div>
 
                     </details>
@@ -742,20 +737,46 @@
             
                 @if($canSeeElection)
 
-                    <a href="{{ route('manage-election.committees.index') }}"
-                    class="home-card">
+                    <details class="home-card registration-card">
 
-                        <div class="home-icon">
-                            <i class="fas fa-vote-yea"></i>
+                        <summary>
+
+                            <div class="home-icon">
+                                <i class="fas fa-users-cog"></i>
+                            </div>
+
+                            <h3>Manage Committee Election</h3>
+
+                            <p>
+                                Manage PETAKOM committee elections
+                                and committee registrations.
+                            </p>
+
+                            <span class="registration-hint">
+                                Choose management type ▼
+                            </span>
+
+                        </summary>
+
+                        <div class="registration-options">
+
+                            {{-- Committee Registration - Admin Only --}}
+                            @if(auth()->user()->isAdmin())
+                                <a href="{{ route('manage-election.committees.index') }}">
+                                    <i class="fas fa-users"></i>
+                                    Committee Registration
+                                </a>
+                            @endif
+
+                            {{-- Committee Election --}}
+                            <a href="{{ route('manage-election.index') }}">
+                                <i class="fas fa-vote-yea"></i>
+                                Committee Election
+                            </a>
+
                         </div>
 
-                        <h3>Manage Committee Election</h3>
-
-                        <p>
-                            Manage candidate registration and committee elections.
-                        </p>
-
-                    </a>
+                    </details>
 
                 @endif
 

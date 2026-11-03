@@ -76,12 +76,6 @@
                                 </a>
                             </li>
 
-                            <li>
-                                <a href="{{ route('manage-election.committees.index') }}">
-                                    Committee Registration
-                                </a>
-                            </li>
-
                         </ul>
                     </li>
 
@@ -198,8 +192,26 @@
 
                 <br>
 
-                <li>
+                <li class="has-submenu">
                     <a href="#">Committee Election</a>
+
+                    <ul class="submenu">
+
+                        <li>
+                            <a href="{{ route('manage-election.index') }}">
+                                Committee Election
+                            </a>
+                        </li>
+
+                        @if(auth()->user()->isAdmin())
+                            <li>
+                                <a href="{{ route('manage-election.committees.index') }}">
+                                    Committee Registration
+                                </a>
+                            </li>
+                        @endif
+
+                    </ul>
                 </li>
 
                 <br>

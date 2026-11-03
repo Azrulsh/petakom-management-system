@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\Registration\Student;
 use App\Models\Registration\Lecturer;
-use App\Models\Registration\Committee;
+use App\Models\Election\Committee;
 
 class PetakomUserSeeder extends Seeder
 {
