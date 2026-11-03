@@ -1,4 +1,3 @@
-
 @php
     $lecturer = $lecturer ?? null;
 @endphp

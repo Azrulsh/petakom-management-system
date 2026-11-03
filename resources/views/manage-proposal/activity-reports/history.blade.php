@@ -1,4 +1,3 @@
-
 @extends('layouts.header-sidebar')
 
 @section('title', 'Activity Report Approval History')
@@ -26,33 +25,32 @@
         </a>
 
     </div>
+   
+    {{-- APPROVAL HISTORY TABS --}}
 
-    
-{{-- APPROVAL HISTORY TABS --}}
+    <ul class="nav nav-tabs mb-4">
 
-<ul class="nav nav-tabs mb-4">
+        <li class="nav-item">
+            <a class="nav-link"
+            href="{{ route('proposal-approvals.history.index') }}">
 
-    <li class="nav-item">
-        <a class="nav-link"
-           href="{{ route('proposal-approvals.history.index') }}">
+                <i class="fas fa-file-alt mr-1"></i>
+                Proposal History
 
-            <i class="fas fa-file-alt mr-1"></i>
-            Proposal History
+            </a>
+        </li>
 
-        </a>
-    </li>
+        <li class="nav-item">
+            <a class="nav-link active"
+            href="{{ route('manage-proposal.activity-reports.history') }}">
 
-    <li class="nav-item">
-        <a class="nav-link active"
-           href="{{ route('manage-proposal.activity-reports.history') }}">
+                <i class="fas fa-clipboard-check mr-1"></i>
+                Activity Report History
 
-            <i class="fas fa-clipboard-check mr-1"></i>
-            Activity Report History
+            </a>
+        </li>
 
-        </a>
-    </li>
-
-</ul>
+    </ul>
 
     {{-- FILTER --}}
     <div class="card shadow-sm mb-4">

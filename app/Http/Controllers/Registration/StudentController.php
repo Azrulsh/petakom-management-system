@@ -39,54 +39,52 @@ class StudentController extends Controller
         return view('manage-registration.students.create');
     }
 
-   
-public function store(Request $request)
-{
-    $validated = $request->validate([
-        'student_number' => 'required|string|max:50|unique:students,student_number',
-        'full_name' => 'required|string|max:255',
-        'email' => 'required|email|max:255|unique:students,email|unique:users,email',
-        'phone' => 'nullable|string|max:30',
-        'programme' => 'required|string|max:255',
-        'year_of_study' => 'nullable|integer|min:1|max:10',
-        'status' => 'required|in:pending,active,inactive',
-    ]);
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'student_number' => 'required|string|max:50|unique:students,student_number',
+            'full_name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:students,email|unique:users,email',
+            'phone' => 'nullable|string|max:30',
+            'programme' => 'required|string|max:255',
+            'year_of_study' => 'nullable|integer|min:1|max:10',
+            'status' => 'required|in:pending,active,inactive',
+        ]);
 
-    // Create User and Student together
-    $student = DB::transaction(function () use ($validated) {
+        // Create User and Student together
+        $student = DB::transaction(function () use ($validated) {
 
-        // 1. Create User account
-        $user = new User();
+            // 1. Create User account
+            $user = new User();
 
-        $user->name = $validated['full_name'];
-        $user->email = $validated['email'];
-        $user->password = Hash::make(Str::random(40));
-        $user->role = 'student';
+            $user->name = $validated['full_name'];
+            $user->email = $validated['email'];
+            $user->password = Hash::make(Str::random(40));
+            $user->role = 'student';
 
-        $user->save();
+            $user->save();
 
-        // 2. Create Student record
-        $studentData = $validated;
-        $studentData['user_id'] = $user->id;
+            // 2. Create Student record
+            $studentData = $validated;
+            $studentData['user_id'] = $user->id;
 
-        return Student::create($studentData);
-    });
+            return Student::create($studentData);
+        });
 
-    // 3. Send password setup link
-    $status = Password::sendResetLink([
-        'email' => $student->email,
-    ]);
+        // 3. Send password setup link
+        $status = Password::sendResetLink([
+            'email' => $student->email,
+        ]);
 
-    return redirect()
-        ->route('manage-registration.students.index')
-        ->with(
-            $status === Password::RESET_LINK_SENT ? 'success' : 'warning',
-            $status === Password::RESET_LINK_SENT
-                ? 'Student registered successfully. Password setup link sent.'
-                : 'Student registered, but password setup email was not sent: ' . __($status)
-        );
-}
-
+        return redirect()
+            ->route('manage-registration.students.index')
+            ->with(
+                $status === Password::RESET_LINK_SENT ? 'success' : 'warning',
+                $status === Password::RESET_LINK_SENT
+                    ? 'Student registered successfully. Password setup link sent.'
+                    : 'Student registered, but password setup email was not sent: ' . __($status)
+            );
+    }
 
     public function show(Student $student)
     {

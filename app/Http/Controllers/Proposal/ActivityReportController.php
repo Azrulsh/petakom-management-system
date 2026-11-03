@@ -345,10 +345,8 @@ class ActivityReportController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function update(
-        Request $request,
-        ActivityReport $activityReport
-    ) {
+    public function update(Request $request, ActivityReport $activityReport) 
+    {
         $user = $request->user();
 
         $this->ensureReportOwner($user, $activityReport);
@@ -518,10 +516,8 @@ class ActivityReportController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function approve(
-        Request $request,
-        ActivityReport $activityReport
-    ) {
+    public function approve(Request $request, ActivityReport $activityReport) 
+    {
         $user = $request->user();
 
         $this->ensureCanReview($user);
@@ -576,10 +572,8 @@ class ActivityReportController extends Controller
     |--------------------------------------------------------------------------
     */
 
-    public function reject(
-        Request $request,
-        ActivityReport $activityReport
-    ) {
+    public function reject(Request $request,ActivityReport $activityReport) 
+    {
         $user = $request->user();
 
         $this->ensureCanReview($user);
@@ -628,61 +622,59 @@ class ActivityReportController extends Controller
             ->with('success', 'Activity report rejected successfully.');
     }
 
-    
-/*
-|--------------------------------------------------------------------------
-| ACTIVITY REPORT APPROVAL HISTORY
-|--------------------------------------------------------------------------
-*/
+    /*
+    |--------------------------------------------------------------------------
+    | ACTIVITY REPORT APPROVAL HISTORY
+    |--------------------------------------------------------------------------
+    */
+    public function history(Request $request)
+    {
+        $user = $request->user();
 
-public function history(Request $request)
-{
-    $user = $request->user();
+        // Only Admin, Lecturer and Coordinator
+        // can access approval history.
+        $this->ensureCanReview($user);
 
-    // Only Admin, Lecturer and Coordinator
-    // can access approval history.
-    $this->ensureCanReview($user);
+        $query = ActivityReport::with([
+            'proposal',
+            'creator',
+            'reviewer'
+        ])
+        ->whereIn('status', ['approved', 'rejected'])
+        ->whereNotNull('reviewed_at');
 
-    $query = ActivityReport::with([
-        'proposal',
-        'creator',
-        'reviewer'
-    ])
-    ->whereIn('status', ['approved', 'rejected'])
-    ->whereNotNull('reviewed_at');
+        // Search
+        if ($request->filled('search')) {
 
-    // Search
-    if ($request->filled('search')) {
+            $search = $request->search;
 
-        $search = $request->search;
+            $query->where(function ($q) use ($search) {
 
-        $query->where(function ($q) use ($search) {
+                $q->where('activity_title', 'like', "%{$search}%")
+                ->orWhere('prepared_by', 'like', "%{$search}%")
+                ->orWhereHas('reviewer', function ($reviewer) use ($search) {
+                    $reviewer->where('name', 'like', "%{$search}%");
+                });
 
-            $q->where('activity_title', 'like', "%{$search}%")
-              ->orWhere('prepared_by', 'like', "%{$search}%")
-              ->orWhereHas('reviewer', function ($reviewer) use ($search) {
-                  $reviewer->where('name', 'like', "%{$search}%");
-              });
+            });
+        }
 
-        });
+        // Filter by decision
+        if ($request->filled('status')) {
+
+            $query->where('status', $request->status);
+
+        }
+
+        $activityReports = $query
+            ->latest('reviewed_at')
+            ->paginate(10)
+            ->appends($request->query());
+
+        return view(
+            'manage-proposal.activity-reports.history',
+            compact('activityReports')
+        );
     }
-
-    // Filter by decision
-    if ($request->filled('status')) {
-
-        $query->where('status', $request->status);
-
-    }
-
-    $activityReports = $query
-        ->latest('reviewed_at')
-        ->paginate(10)
-        ->appends($request->query());
-
-    return view(
-        'manage-proposal.activity-reports.history',
-        compact('activityReports')
-    );
-}
 
 }

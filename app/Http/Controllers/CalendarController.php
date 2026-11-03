@@ -18,6 +18,7 @@ class CalendarController extends Controller
         return view('manage-calendar.index');
          
     }
+    
     public function create(Request $request){
          $validated = $request->validate([
         'title' => ['required', 'string', 'max:255'],

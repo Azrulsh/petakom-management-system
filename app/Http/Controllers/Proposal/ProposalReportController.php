@@ -24,7 +24,6 @@ class ProposalReportController extends Controller
 
         $rejectedProposals = Proposal::where('status', 'rejected')->count();
 
-
         // Activity Report Statistics
         $totalActivityReports = ActivityReport::count();
 
@@ -32,11 +31,8 @@ class ProposalReportController extends Controller
 
         $totalExpenditure = ActivityReport::sum('actual_expenditure');
 
-
         // Latest Proposals
-        $proposals = Proposal::latest()
-            ->paginate(10, ['*'], 'proposals_page');
-
+        $proposals = Proposal::latest()->paginate(10, ['*'], 'proposals_page');
 
         // Latest Activity Reports
         $activityReports = ActivityReport::with('proposal')

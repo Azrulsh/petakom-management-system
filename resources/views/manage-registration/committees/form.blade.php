@@ -1,4 +1,3 @@
-
 @php
     $committee = $committee ?? null;
 @endphp

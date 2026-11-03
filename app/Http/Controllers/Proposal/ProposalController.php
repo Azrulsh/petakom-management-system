@@ -5,221 +5,207 @@ namespace App\Http\Controllers\Proposal;
 use App\Http\Controllers\Controller;
 use App\Models\Proposal\Proposal;
 use App\Models\Proposal\ProposalReview;
-use App\Models\User;
+//use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
 class ProposalController extends Controller
 {
-    
-public function index(Request $request)
-{
-    $user = $request->user();
+    public function index(Request $request)
+    {
+        $user = $request->user();
 
-    $this->ensureCanManageProposals($user);
+        $this->ensureCanManageProposals($user);
 
-    $query = Proposal::query();
+        $query = Proposal::query();
 
-    // Admin can view all proposals.
-    // Other users can only view their own proposals.
-    if (!$user->isAdmin()) {
-        $query->where('user_id', $user->id);
-    }
-
-    if ($request->filled('search')) {
-
-        $search = $request->search;
-
-        $query->where(function ($q) use ($search) {
-
-            $q->where('title', 'like', "%{$search}%")
-              ->orWhere('venue', 'like', "%{$search}%")
-              ->orWhere('prepared_by', 'like', "%{$search}%");
-
-        });
-    }
-
-    if ($request->filled('status')) {
-        $query->where('status', $request->status);
-    }
-
-    if ($request->filled('category')) {
-        $query->where('activity_category', $request->category);
-    }
-
-    $proposals = $query
-        ->latest()
-        ->paginate(10)
-        ->appends($request->query());
-
-    return view('manage-proposal.index', compact('proposals'));
-}
-
-
-    
-public function create(Request $request)
-{
-    $this->ensureCanManageProposals($request->user());
-
-    return view('manage-proposal.create');
-}
-
-
-public function store(Request $request)
-{
-    $user = $request->user();
-
-    $this->ensureCanManageProposals($user);
-
-    $validated = $request->validate([
-        'title' => ['required', 'string', 'max:255'],
-        'activity_category' => ['nullable', 'string', 'max:100'],
-        'background' => ['nullable', 'string'],
-        'objectives' => ['required', 'string'],
-        'proposed_date' => ['required', 'date'],
-        'end_date' => ['nullable', 'date', 'after_or_equal:proposed_date'],
-        'venue' => ['required', 'string', 'max:255'],
-        'target_participants' => ['nullable', 'integer', 'min:0'],
-        'estimated_budget' => ['nullable', 'numeric', 'min:0'],
-        'prepared_by' => ['required', 'string', 'max:255'],
-    ]);
-
-    $validated['user_id'] = $user->id;
-
-    $validated['target_participants'] =
-        $validated['target_participants'] ?? 0;
-
-    $validated['estimated_budget'] =
-        $validated['estimated_budget'] ?? 0;
-
-    $validated['status'] = 'draft';
-
-    Proposal::create($validated);
-
-    return redirect()
-        ->route('manage-proposal.proposals.index')
-        ->with('success', 'Proposal created successfully.');
-}
-
-
-   
-public function show(Request $request, Proposal $proposal)
-{
-    $this->ensureProposalOwner($request->user(), $proposal);
-
-    $proposal->load('activityReports');
-
-    return view('manage-proposal.show', compact('proposal'));
-}
-
-
-public function edit(Request $request, Proposal $proposal)
-{
-    $this->ensureProposalOwner($request->user(), $proposal);
-
-    return view('manage-proposal.edit', compact('proposal'));
-}
-
-
-    
-public function update(Request $request, Proposal $proposal)
-{
-    $this->ensureProposalOwner($request->user(), $proposal);
-
-    $validated = $request->validate([
-        'title' => ['required', 'string', 'max:255'],
-        'activity_category' => ['nullable', 'string', 'max:100'],
-        'background' => ['nullable', 'string'],
-        'objectives' => ['required', 'string'],
-        'proposed_date' => ['required', 'date'],
-        'end_date' => ['nullable', 'date', 'after_or_equal:proposed_date'],
-        'venue' => ['required', 'string', 'max:255'],
-        'target_participants' => ['nullable', 'integer', 'min:0'],
-        'estimated_budget' => ['nullable', 'numeric', 'min:0'],
-        'prepared_by' => ['required', 'string', 'max:255'],
-    ]);
-
-    // Do not allow changing proposal ownership.
-    unset($validated['user_id']);
-
-    $proposal->update($validated);
-
-    return redirect()
-        ->route('manage-proposal.proposals.index')
-        ->with('success', 'Proposal updated successfully.');
-}
-
-   
-
-public function submit(Request $request, Proposal $proposal)
-{
-    $this->ensureProposalOwner($request->user(), $proposal);
-
-    $result = DB::transaction(function () use ($proposal) {
-
-        $lockedProposal = Proposal::whereKey($proposal->id)
-            ->lockForUpdate()
-            ->firstOrFail();
-
-        if (!in_array(
-            $lockedProposal->status,
-            ['draft', 'rejected'],
-            true
-        )) {
-            return false;
+        // Admin can view all proposals.
+        // Other users can only view their own proposals.
+        if (!$user->isAdmin()) {
+            $query->where('user_id', $user->id);
         }
 
-        $lockedProposal->update([
-            'status' => 'pending',
-            'review_remarks' => null,
-            'reviewed_by' => null,
-            'reviewed_at' => null,
+        if ($request->filled('search')) {
+
+            $search = $request->search;
+
+            $query->where(function ($q) use ($search) {
+
+                $q->where('title', 'like', "%{$search}%")
+                ->orWhere('venue', 'like', "%{$search}%")
+                ->orWhere('prepared_by', 'like', "%{$search}%");
+
+            });
+        }
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        if ($request->filled('category')) {
+            $query->where('activity_category', $request->category);
+        }
+
+        $proposals = $query
+            ->latest()
+            ->paginate(10)
+            ->appends($request->query());
+
+        return view('manage-proposal.index', compact('proposals'));
+    }
+
+    public function create(Request $request)
+    {
+        $this->ensureCanManageProposals($request->user());
+
+        return view('manage-proposal.create');
+    }
+
+    public function store(Request $request)
+    {
+        $user = $request->user();
+
+        $this->ensureCanManageProposals($user);
+
+        $validated = $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+            'activity_category' => ['nullable', 'string', 'max:100'],
+            'background' => ['nullable', 'string'],
+            'objectives' => ['required', 'string'],
+            'proposed_date' => ['required', 'date'],
+            'end_date' => ['nullable', 'date', 'after_or_equal:proposed_date'],
+            'venue' => ['required', 'string', 'max:255'],
+            'target_participants' => ['nullable', 'integer', 'min:0'],
+            'estimated_budget' => ['nullable', 'numeric', 'min:0'],
+            'prepared_by' => ['required', 'string', 'max:255'],
         ]);
 
-        // Previous review history remains unchanged.
+        $validated['user_id'] = $user->id;
 
-        return true;
-    });
+        $validated['target_participants'] =
+            $validated['target_participants'] ?? 0;
 
-    if (!$result) {
-        return back()->with(
-            'error',
-            'This proposal cannot be submitted.'
-        );
+        $validated['estimated_budget'] =
+            $validated['estimated_budget'] ?? 0;
+
+        $validated['status'] = 'draft';
+
+        Proposal::create($validated);
+
+        return redirect()
+            ->route('manage-proposal.proposals.index')
+            ->with('success', 'Proposal created successfully.');
     }
 
-    return redirect()
-        ->route('manage-proposal.proposals.index')
-        ->with(
-            'success',
-            'Proposal submitted successfully.'
-        );
-}
+    public function show(Request $request, Proposal $proposal)
+    {
+        $this->ensureProposalOwner($request->user(), $proposal);
 
+        $proposal->load('activityReports');
 
-
-public function destroy(Request $request, Proposal $proposal)
-{
-    $this->ensureProposalOwner($request->user(), $proposal);
-
-    // Preserve proposals that have related records.
-    if (
-        $proposal->reviews()->exists() ||
-        $proposal->activityReports()->exists()
-    ) {
-        return back()->with(
-            'error',
-            'This proposal cannot be deleted because it has related records.'
-        );
+        return view('manage-proposal.show', compact('proposal'));
     }
 
-    $proposal->delete();
+    public function edit(Request $request, Proposal $proposal)
+    {
+        $this->ensureProposalOwner($request->user(), $proposal);
 
-    return redirect()
-        ->route('manage-proposal.proposals.index')
-        ->with('success', 'Proposal deleted successfully.');
-}
+        return view('manage-proposal.edit', compact('proposal'));
+    }
 
+    public function update(Request $request, Proposal $proposal)
+    {
+        $this->ensureProposalOwner($request->user(), $proposal);
+
+        $validated = $request->validate([
+            'title' => ['required', 'string', 'max:255'],
+            'activity_category' => ['nullable', 'string', 'max:100'],
+            'background' => ['nullable', 'string'],
+            'objectives' => ['required', 'string'],
+            'proposed_date' => ['required', 'date'],
+            'end_date' => ['nullable', 'date', 'after_or_equal:proposed_date'],
+            'venue' => ['required', 'string', 'max:255'],
+            'target_participants' => ['nullable', 'integer', 'min:0'],
+            'estimated_budget' => ['nullable', 'numeric', 'min:0'],
+            'prepared_by' => ['required', 'string', 'max:255'],
+        ]);
+
+        // Do not allow changing proposal ownership.
+        unset($validated['user_id']);
+
+        $proposal->update($validated);
+
+        return redirect()
+            ->route('manage-proposal.proposals.index')
+            ->with('success', 'Proposal updated successfully.');
+    } 
+
+    public function submit(Request $request, Proposal $proposal)
+    {
+        $this->ensureProposalOwner($request->user(), $proposal);
+
+        $result = DB::transaction(function () use ($proposal) {
+
+            $lockedProposal = Proposal::whereKey($proposal->id)
+                ->lockForUpdate()
+                ->firstOrFail();
+
+            if (!in_array(
+                $lockedProposal->status,
+                ['draft', 'rejected'],
+                true
+            )) {
+                return false;
+            }
+
+            $lockedProposal->update([
+                'status' => 'pending',
+                'review_remarks' => null,
+                'reviewed_by' => null,
+                'reviewed_at' => null,
+            ]);
+
+            // Previous review history remains unchanged.
+
+            return true;
+        });
+
+        if (!$result) {
+            return back()->with(
+                'error',
+                'This proposal cannot be submitted.'
+            );
+        }
+
+        return redirect()
+            ->route('manage-proposal.proposals.index')
+            ->with(
+                'success',
+                'Proposal submitted successfully.'
+            );
+    }
+
+    public function destroy(Request $request, Proposal $proposal)
+    {
+        $this->ensureProposalOwner($request->user(), $proposal);
+
+        // Preserve proposals that have related records.
+        if (
+            $proposal->reviews()->exists() ||
+            $proposal->activityReports()->exists()
+        ) {
+            return back()->with(
+                'error',
+                'This proposal cannot be deleted because it has related records.'
+            );
+        }
+
+        $proposal->delete();
+
+        return redirect()
+            ->route('manage-proposal.proposals.index')
+            ->with('success', 'Proposal deleted successfully.');
+    }
 
     /**
      * Display pending proposals for reviewers.
@@ -247,22 +233,22 @@ public function destroy(Request $request, Proposal $proposal)
     }
 
     public function reviewShow(Request $request, Proposal $proposal)
-{
-    $this->ensureCanReviewProposals($request->user());
+    {
+        $this->ensureCanReviewProposals($request->user());
 
-    if ($proposal->status !== 'pending') {
-        return redirect()
-            ->route('proposal-approvals.index')
-            ->with('error', 'This proposal is no longer pending review.');
+        if ($proposal->status !== 'pending') {
+            return redirect()
+                ->route('proposal-approvals.index')
+                ->with('error', 'This proposal is no longer pending review.');
+        }
+
+        $proposal->load('activityReports', 'reviewer');
+
+        return view(
+            'manage-proposal.approvals.show',
+            compact('proposal')
+        );
     }
-
-    $proposal->load('activityReports', 'reviewer');
-
-    return view(
-        'manage-proposal.approvals.show',
-        compact('proposal')
-    );
-}
 
     /**
     * Approve Proposal and Save Review History.
@@ -420,18 +406,17 @@ public function destroy(Request $request, Proposal $proposal)
         );
     }
 
-
     public function historyShow(Request $request, Proposal $proposal)
-{
-    $this->ensureCanReviewProposals($request->user());
+    {
+        $this->ensureCanReviewProposals($request->user());
 
-    $proposal->load('reviews.reviewer');
+        $proposal->load('reviews.reviewer');
 
-    return view(
-        'manage-proposal.approvals.history-show',
-        compact('proposal')
-    );
-}
+        return view(
+            'manage-proposal.approvals.history-show',
+            compact('proposal')
+        );
+    }
 
     /**
      * Check whether user can manage proposals.
@@ -460,40 +445,39 @@ public function destroy(Request $request, Proposal $proposal)
         );
     }
 
-    
-/**
- * Check reviewer access.
- */
-private function ensureCanReviewProposals($user): void
-{
-    abort_unless(
-        $user && (
-            $user->isAdmin() ||
-            $user->isLecturer() ||
-            $user->isCoordinator()
-        ),
-        403,
-        'You are not authorized to review proposals.'
-    );
-}
+    /**
+     * Check reviewer access.
+     */
+    private function ensureCanReviewProposals($user): void
+    {
+        abort_unless(
+            $user && (
+                $user->isAdmin() ||
+                $user->isLecturer() ||
+                $user->isCoordinator()
+            ),
+            403,
+            'You are not authorized to review proposals.'
+        );
+    }
 
 
-/**
- * Check approval access.
- * Only Admin and Coordinator can approve.
- */
-private function ensureCanApproveProposals($user): void
-{
-    abort_unless(
-        $user && (
-            $user->isAdmin() ||
-            $user->isLecturer() ||
-            $user->isCoordinator()
-        ),
-        403,
-        'You are not authorized to approve proposals.'
-    );
-}
+    /**
+     * Check approval access.
+     * Only Admin and Coordinator can approve.
+     */
+    private function ensureCanApproveProposals($user): void
+    {
+        abort_unless(
+            $user && (
+                $user->isAdmin() ||
+                $user->isLecturer() ||
+                $user->isCoordinator()
+            ),
+            403,
+            'You are not authorized to approve proposals.'
+        );
+    }
 
 
 }

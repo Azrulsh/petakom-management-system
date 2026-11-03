@@ -1,4 +1,3 @@
-
 @extends('layouts.header-sidebar')
 
 @section('title', 'Activity Report Details')

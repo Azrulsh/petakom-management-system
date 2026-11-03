@@ -1,4 +1,3 @@
-
 <div class="form-group">
     <label>Proposal Title <span class="text-danger">*</span></label>
 

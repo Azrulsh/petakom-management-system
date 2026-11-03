@@ -1,4 +1,3 @@
-
 @extends('layouts.header-sidebar')
 
 @section('title', 'Activity Reports')
@@ -23,38 +22,38 @@
     {{-- PAGE HEADER --}}
    <div class="d-flex justify-content-between align-items-center mb-4">
 
-    <div>
-        <h3 class="font-weight-bold">Activity Reports</h3>
+        <div>
+            <h3 class="font-weight-bold">Activity Reports</h3>
 
-        <p class="text-muted">
-            Manage reports and evaluate completed PETAKOM activities.
-        </p>
+            <p class="text-muted">
+                Manage reports and evaluate completed PETAKOM activities.
+            </p>
+        </div>
+
+        <div class="d-flex" style="gap: 10px;">
+
+            @if($isReviewer)
+
+                <a href="{{ route('manage-proposal.activity-reports.history') }}"
+                class="btn btn-outline-dark">
+                    <i class="fas fa-history"></i>
+                    Approval History
+                </a>
+
+            @endif
+
+            @if($isAdmin || $isCommittee)
+
+                <a href="{{ route('manage-proposal.activity-reports.create') }}"
+                class="btn btn-danger">
+                    + Create Activity Report
+                </a>
+
+            @endif
+
+        </div>
+
     </div>
-
-    <div class="d-flex" style="gap: 10px;">
-
-        @if($isReviewer)
-
-            <a href="{{ route('manage-proposal.activity-reports.history') }}"
-               class="btn btn-outline-dark">
-                <i class="fas fa-history"></i>
-                Approval History
-            </a>
-
-        @endif
-
-        @if($isAdmin || $isCommittee)
-
-            <a href="{{ route('manage-proposal.activity-reports.create') }}"
-               class="btn btn-danger">
-                + Create Activity Report
-            </a>
-
-        @endif
-
-    </div>
-
-</div>
 
     {{-- SUCCESS MESSAGE --}}
     @if(session('success'))
