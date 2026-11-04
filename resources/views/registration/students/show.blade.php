@@ -1,4 +1,4 @@
-@extends('layouts.header-sidebar')tration')
+@extends('layouts.header-sidebar')
 
 @section('content')
 
@@ -10,7 +10,7 @@
             <p class="text-muted mb-0">Student registration information.</p>
         </div>
 
-        <a href="{{ route('manage-registration.students.index') }}"
+        <a href="{{ route('registration.students.index') }}"
            class="btn btn-secondary">
             Back to Students
         </a>
@@ -69,12 +69,12 @@
 
             <div class="d-flex gap-2">
 
-                <a href="{{ route('manage-registration.students.edit', $student->id) }}"
+                <a href="{{ route('registration.students.edit', $student->id) }}"
                    class="btn btn-warning">
                     Edit Student
                 </a>
 
-                <form action="{{ route('manage-registration.students.destroy', $student->id) }}"
+                <form action="{{ route('registration.students.destroy', $student->id) }}"
                       method="POST"
                       onsubmit="return confirm('Delete this student?')">
 

@@ -5,8 +5,10 @@
 <div class="container-fluid py-4">
 
     <div class="mb-4">
-        <h3 class="fw-bold">Add New Student</h3>
-        <p class="text-muted">Register a new PETAKOM student.</p>
+        <h3 class="fw-bold">Add New Lecturer</h3>
+        <p class="text-muted">
+            Register a new faculty lecturer.
+        </p>
     </div>
 
     @if($errors->any())
@@ -22,7 +24,11 @@
 
     <div class="card border-0 shadow-sm">
         <div class="card-body p-4">
-            @include('manage-registration.students.form', ['student' => null])
+
+            @include('registration.lecturers.form', [
+                'lecturer' => null
+            ])
+
         </div>
     </div>
 

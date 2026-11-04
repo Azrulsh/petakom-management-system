@@ -63,13 +63,13 @@
                         <ul class="submenu">
 
                             <li>
-                                <a href="{{ route('manage-registration.students.index') }}">
+                                <a href="{{ route('registration.students.index') }}">
                                     Student Registration
                                 </a>
                             </li>
 
                             <li>
-                                <a href="{{ route('manage-registration.lecturers.index') }}">
+                                <a href="{{ route('registration.lecturers.index') }}">
                                     Lecturer Registration
                                 </a>
                             </li>
@@ -203,7 +203,7 @@
 
                         @if(auth()->user()->isAdmin())
                             <li>
-                                <a href="{{ route('manage-election.committees.index') }}">
+                                <a href="{{ route('election.committees.index') }}">
                                     Committee Registration
                                 </a>
                             </li>

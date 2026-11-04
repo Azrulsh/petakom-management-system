@@ -35,7 +35,7 @@ class LecturerController extends Controller
             ->appends($request->query());
 
         return view(
-            'manage-registration.lecturers.index',
+            'registration.lecturers.index',
             compact('lecturers')
         );
     }
@@ -45,7 +45,7 @@ class LecturerController extends Controller
      */
     public function create()
     {
-        return view('manage-registration.lecturers.create');
+        return view('registration.lecturers.create');
     }
 
     /**
@@ -111,7 +111,7 @@ class LecturerController extends Controller
             report($exception);
 
             return redirect()
-                ->route('manage-registration.lecturers.index')
+                ->route('registration.lecturers.index')
                 ->with(
                     'warning',
                     'Lecturer registered successfully, but password setup email could not be sent.'
@@ -121,7 +121,7 @@ class LecturerController extends Controller
         if ($status === Password::RESET_LINK_SENT) {
 
             return redirect()
-                ->route('manage-registration.lecturers.index')
+                ->route('registration.lecturers.index')
                 ->with(
                     'success',
                     'Lecturer registered successfully. Password setup link has been sent.'
@@ -129,7 +129,7 @@ class LecturerController extends Controller
         }
 
         return redirect()
-            ->route('manage-registration.lecturers.index')
+            ->route('registration.lecturers.index')
             ->with(
                 'warning',
                 'Lecturer registered, but password setup email was not sent: ' . __($status)
@@ -142,7 +142,7 @@ class LecturerController extends Controller
     public function show(Lecturer $lecturer)
     {
         return view(
-            'manage-registration.lecturers.show',
+            'registration.lecturers.show',
             compact('lecturer')
         );
     }
@@ -153,7 +153,7 @@ class LecturerController extends Controller
     public function edit(Lecturer $lecturer)
     {
         return view(
-            'manage-registration.lecturers.edit',
+            'registration.lecturers.edit',
             compact('lecturer')
         );
     }
@@ -219,7 +219,7 @@ class LecturerController extends Controller
         });
 
         return redirect()
-            ->route('manage-registration.lecturers.index')
+            ->route('registration.lecturers.index')
             ->with(
                 'success',
                 'Lecturer updated successfully.'
@@ -247,7 +247,7 @@ class LecturerController extends Controller
         });
 
         return redirect()
-            ->route('manage-registration.lecturers.index')
+            ->route('registration.lecturers.index')
             ->with(
                 'success',
                 'Lecturer deleted and user account deactivated successfully.'

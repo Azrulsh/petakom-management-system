@@ -12,7 +12,7 @@
             </p>
         </div>
 
-        <a href="{{ route('manage-registration.students.create') }}"
+        <a href="{{ route('registration.students.create') }}"
            class="btn btn-primary">
             + Add Student
         </a>
@@ -38,7 +38,7 @@
         <div class="card-body">
 
             <form method="GET"
-                  action="{{ route('manage-registration.students.index') }}"
+                  action="{{ route('registration.students.index') }}"
                   class="row g-3 mb-4">
 
                 <div class="col-md-6">
@@ -125,17 +125,17 @@
                             <td>
                                 <div class="d-flex gap-1">
 
-                                    <a href="{{ route('manage-registration.students.show', $student->id) }}"
+                                    <a href="{{ route('registration.students.show', $student->id) }}"
                                        class="btn btn-sm btn-info text-white">
                                         View
                                     </a>
 
-                                    <a href="{{ route('manage-registration.students.edit', $student->id) }}"
+                                    <a href="{{ route('registration.students.edit', $student->id) }}"
                                        class="btn btn-sm btn-warning">
                                         Edit
                                     </a>
 
-                                    <form action="{{ route('manage-registration.students.destroy', $student->id) }}"
+                                    <form action="{{ route('registration.students.destroy', $student->id) }}"
                                           method="POST"
                                           onsubmit="return confirm('Are you sure you want to delete this student?')">
 

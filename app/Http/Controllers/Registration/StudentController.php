@@ -31,12 +31,12 @@ class StudentController extends Controller
             ->paginate(10)
             ->appends($request->query());
 
-        return view('manage-registration.students.index', compact('students'));
+        return view('registration.students.index', compact('students'));
     }
 
     public function create()
     {
-        return view('manage-registration.students.create');
+        return view('registration.students.create');
     }
 
     public function store(Request $request)
@@ -80,7 +80,7 @@ class StudentController extends Controller
         ]);
 
         return redirect()
-            ->route('manage-registration.students.index')
+            ->route('registration.students.index')
             ->with(
                 $status === Password::RESET_LINK_SENT ? 'success' : 'warning',
                 $status === Password::RESET_LINK_SENT
@@ -91,12 +91,12 @@ class StudentController extends Controller
 
     public function show(Student $student)
     {
-        return view('manage-registration.students.show', compact('student'));
+        return view('registration.students.show', compact('student'));
     }
 
     public function edit(Student $student)
     {
-        return view('manage-registration.students.edit', compact('student'));
+        return view('registration.students.edit', compact('student'));
     }
 
     public function update(Request $request, Student $student)
@@ -145,7 +145,7 @@ class StudentController extends Controller
         });
 
         return redirect()
-            ->route('manage-registration.students.index')
+            ->route('registration.students.index')
             ->with('success', 'Student updated successfully.');
     }
 
@@ -178,7 +178,7 @@ class StudentController extends Controller
         });
 
         return redirect()
-            ->route('manage-registration.students.index')
+            ->route('registration.students.index')
             ->with('success', 'Student deleted and user account deactivated successfully.');
     }
 

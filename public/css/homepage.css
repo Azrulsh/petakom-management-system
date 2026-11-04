@@ -1,0 +1,612 @@
+/* =====================================================================
+   PETAKOM HOMEPAGE CSS
+   Combined in original cascade order:
+     1. public/css/style.css
+     2. public/css/nav.css
+     3. <style> block from resources/views/homepage.blade.php
+   Original CSS selectors, rules, and values are unchanged.
+   Font @import is placed at the top for valid CSS syntax.
+   ===================================================================== */
+
+@import url('https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap');
+
+/* =====================================================================
+   SOURCE 1 — style.css (ORIGINAL CSS)
+   ===================================================================== */
+.title {
+   font-weight: bold;
+   font-size: 50px;
+   color: rgb(206, 3, 12);
+   background: white;
+ }
+ 
+.logo {
+   width: 120px;
+   margin-left: 30px;
+ }
+ 
+ .home-container {
+ width: auto;
+ min-height: 90%;
+ background-color: lightgray;
+ padding: 40px;;
+ display: flex;
+ padding: 20px;
+ justify-content: space-evenly;
+ align-items: center;
+ height: 100%;
+ 
+ /* padding-bottom: */
+   }
+  
+.calendar{
+   color: yellow;
+   background-color: rgb(206, 3, 12);
+   font-weight: normal;
+   font-size: 18px;
+   border-radius: 12px;
+   padding: 10px;
+ }
+ 
+.homepage{
+   color: yellow;
+   background-color: rgb(206, 3, 12);
+   font-weight: bolder;
+   font-size: 20px;
+   border-radius: 12px;
+   padding: 15px;
+ }
+ 
+.home-container .calendar{
+   color: yellow;
+   background-color: rgb(206, 3, 12);
+   font-weight: bolder;
+   font-size: 20px;
+   border-radius: 12px;
+   padding: 24px;
+ }
+ 
+.footer{
+   position: fixed;
+   left: 0px;
+   bottom: 0px;
+   width: 100%;
+   text-align: end;
+   background: white;
+ }
+
+.mark.red{
+   color: red;
+   background: lightgray;
+ }
+ 
+ 
+.top{
+   font-size: 18px;
+   margin-left: 25px;
+ }
+  
+.center{
+   font-size: 35px;
+   position: absolute;
+   justify-content: center;
+   background: white;
+   margin-left: 30%;
+   margin-top: 20px;
+ }
+
+/* =====================================================================
+   SOURCE 2 — nav.css (ORIGINAL CSS, @import moved above)
+   ===================================================================== */
+/* navigation bar css */
+*{
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+   list-style: none;
+   text-decoration: none;
+   font-family: 'Josefin Sans', sans-serif;
+ }
+
+.wrapper{
+  display: flex;
+  position: relative;
+}
+
+.wrapper .sidebar{
+  width: 300px;
+  min-height: 100%;
+  background: rgb(206, 3, 12);
+  padding: 30px 0px;
+  position: sticky;
+ }
+
+.wrapper .sidebar ul li{
+  padding: 15px;
+  border-bottom: 1px solid rgb(119, 0, 6);
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  border-top: 1px solid rgba(255,255,255,0.05);
+ }    
+
+.wrapper .sidebar ul li a{
+  color: #ffffff;
+  display: block;
+ }
+
+.wrapper .sidebar ul li:hover{
+  background-color: rgb(119, 0, 6);;
+ }
+    
+.wrapper .sidebar ul li:hover a{
+  color: #fff;
+ }
+ 
+.wrapper .main_content{
+  width: 100%;
+  background:lightgrey;
+  margin-left: 200px;
+ }
+
+.wrapper .top{
+  margin-right: 250px
+ }
+
+ /* Remove underline from sidebar navigation */
+.wrapper .sidebar ul li a,
+.wrapper .sidebar ul li a:link,
+.wrapper .sidebar ul li a:visited,
+.wrapper .sidebar ul li a:hover,
+.wrapper .sidebar ul li a:focus,
+.wrapper .sidebar ul li a:active {
+    text-decoration: none !important;
+}
+
+/* =====================================================================
+   SOURCE 3 — homepage.blade.php <style> (ORIGINAL CSS)
+   ===================================================================== */
+        /* =====================================
+           GLOBAL SETTINGS
+        ===================================== */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: #F8F8F8;
+            color: #333333;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* =====================================
+           HEADER
+        ===================================== */
+
+        .home-header {
+            background: #8B0000;
+            color: #FFFFFF;
+            min-height: 105px;
+            display: flex;
+            align-items: center;
+            padding: 18px 7%;
+            gap: 20px;
+        }
+
+        .home-header img {
+            width: 68px;
+            height: 68px;
+            object-fit: contain;
+        }
+
+        .header-text h1 {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+        }
+
+        .header-text p {
+            font-size: 12px;
+            color: #F5DADA;
+            letter-spacing: 2px;
+            margin-top: 3px;
+        }
+
+        /* =====================================
+           LOGIN / DASHBOARD BUTTON
+        ===================================== */
+
+        .auth-actions {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .auth-actions a {
+            display: inline-block;
+            color: #FFFFFF;
+            text-decoration: none;
+            padding: 9px 20px;
+            border: 1px solid rgba(255,255,255,.6);
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 700;
+            transition: .3s;
+        }
+
+        .auth-actions a:hover {
+            background: #FFFFFF;
+            color: #8B0000;
+        }
+
+        .logout-form {
+            display: inline;
+        }
+
+        .logout-button {
+            background: transparent;
+            color: #FFFFFF;
+            border: 1px solid rgba(255,255,255,.6);
+            border-radius: 6px;
+            padding: 9px 20px;
+            font-size: 13px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: .3s;
+        }
+
+        .logout-button:hover {
+            background: #FFFFFF;
+            color: #8B0000;
+        }
+
+        /* =====================================
+           MAIN CONTENT
+        ===================================== */
+
+        .home-main {
+            width: 100%;
+            max-width: 1200px;
+            margin: auto;
+            padding: 65px 30px;
+            flex: 1;
+        }
+
+        /* =====================================
+           WELCOME SECTION
+        ===================================== */
+
+        .welcome-section {
+            text-align: center;
+            margin-bottom: 45px;
+        }
+
+        .welcome-label {
+            color: #C62828;
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 3px;
+            margin-bottom: 12px;
+        }
+
+        .welcome-section h2 {
+            font-size: 34px;
+            font-weight: 800;
+            color: #8B0000;
+            margin-bottom: 12px;
+        }
+
+        .welcome-section p {
+            color: #666666;
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        /* =====================================
+           MENU GRID
+        ===================================== */
+
+        .home-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+            align-items: stretch;
+        }
+
+        /* =====================================
+           MENU CARDS
+        ===================================== */
+
+        .home-card {
+            position: relative;
+            background: #FFFFFF;
+            text-decoration: none;
+            color: #8B0000;
+            border-radius: 12px;
+            padding: 32px 25px;
+            width: 100%;
+            height: 220px;
+            min-height: 220px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            border: 1px solid #F0D5D5;
+            box-shadow: 0 4px 15px rgba(139, 0, 0, .04);
+            transition: all .25s ease;
+        }
+
+        .home-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(139, 0, 0, .12);
+            border-color: #C62828;
+            color: #C62828;
+            text-decoration: none;
+            z-index: 2;
+        }
+
+        /* =====================================
+           MENU ICON
+        ===================================== */
+
+        .home-icon {
+            width: 55px;
+            height: 55px;
+            background: #FDECEC;
+            color: #C62828;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 23px;
+            margin-bottom: 20px;
+            flex-shrink: 0;
+            transition: .25s;
+        }
+
+        .home-card:hover .home-icon {
+            background: #C62828;
+            color: #FFFFFF;
+        }
+
+        /* =====================================
+           MENU TEXT
+        ===================================== */
+
+        .home-card h3 {
+            font-size: 17px;
+            font-weight: 800;
+            margin-bottom: 8px;
+            color: #8B0000;
+        }
+
+        .home-card p {
+            font-size: 13px;
+            color: #666666;
+            line-height: 1.6;
+            margin-bottom: 0;
+        }
+
+        /* =====================================
+           REGISTRATION DROPDOWN
+        ===================================== */
+
+        .registration-card {
+            position: relative;
+            display: block;
+            height: 220px;
+            min-height: 220px;
+            padding: 0;
+            overflow: visible;
+        }
+
+        .registration-card[open] {
+            z-index: 20;
+            transform: none;
+        }
+
+        .registration-card summary {
+            list-style: none;
+            cursor: pointer;
+            width: 100%;
+            height: 100%;
+            min-height: 220px;
+            padding: 32px 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+            box-sizing: border-box;
+        }
+
+        .registration-card summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .registration-hint {
+            display: inline-block;
+            margin-top: 10px;
+            color: #C62828;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        .registration-options {
+            position: absolute;
+            top: calc(100% + 8px);
+            left: 0;
+            width: 100%;
+            padding: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background: #FFFFFF;
+            border: 1px solid #F0D5D5;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(139, 0, 0, .12);
+            z-index: 100;
+        }
+
+        .registration-options a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            background: #FDECEC;
+            color: #8B0000;
+            text-decoration: none;
+            border-radius: 7px;
+            font-size: 13px;
+            font-weight: 700;
+            transition: .2s;
+        }
+
+        .registration-options a:hover {
+            background: #C62828;
+            color: #FFFFFF;
+            text-decoration: none;
+        }
+
+        .registration-options a i {
+            width: 20px;
+            text-align: center;
+        }
+
+        /* =====================================
+           GUEST MESSAGE
+        ===================================== */
+
+        .guest-message {
+            text-align: center;
+            background: #FFFFFF;
+            border: 1px solid #F0D5D5;
+            border-radius: 12px;
+            padding: 35px;
+            max-width: 650px;
+            margin: auto;
+        }
+
+        .guest-message i {
+            font-size: 35px;
+            color: #C62828;
+            margin-bottom: 15px;
+        }
+
+        .guest-message h3 {
+            color: #8B0000;
+            margin-bottom: 10px;
+        }
+
+        .guest-message p {
+            color: #666666;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .guest-login {
+            display: inline-block;
+            background: #8B0000;
+            color: #FFFFFF;
+            padding: 11px 25px;
+            border-radius: 7px;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        .guest-login:hover {
+            background: #C62828;
+            color: #FFFFFF;
+            text-decoration: none;
+        }
+
+        /* =====================================
+           FOOTER
+        ===================================== */
+
+        .home-footer {
+            background: #8B0000;
+            color: #FFFFFF;
+            text-align: center;
+            padding: 20px;
+            font-size: 13px;
+        }
+
+        /* =====================================
+           TABLET RESPONSIVE
+        ===================================== */
+
+        @media (max-width: 900px) {
+
+            .home-container {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 20px;
+            }
+
+        }
+
+        /* =====================================
+           MOBILE RESPONSIVE
+        ===================================== */
+
+        @media (max-width: 600px) {
+
+            .home-header {
+                padding: 20px;
+                gap: 12px;
+                flex-wrap: wrap;
+            }
+
+            .home-header img {
+                width: 50px;
+                height: 50px;
+            }
+
+            .header-text h1 {
+                font-size: 15px;
+                letter-spacing: .5px;
+            }
+
+            .header-text p {
+                font-size: 9px;
+                letter-spacing: 1px;
+            }
+
+            .auth-actions {
+                width: 100%;
+                margin-left: 62px;
+                flex-wrap: wrap;
+            }
+
+            .home-main {
+                padding: 40px 18px;
+            }
+
+            .welcome-section h2 {
+                font-size: 26px;
+            }
+
+            .welcome-section p {
+                font-size: 13px;
+            }
+
+            .home-container {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+
+            .home-card,
+            .registration-card {
+                height: 220px;
+                min-height: 220px;
+            }
+
+            .registration-card summary {
+                min-height: 220px;
+            }
+
+        }

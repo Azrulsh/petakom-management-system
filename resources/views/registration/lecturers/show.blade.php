@@ -13,7 +13,7 @@
             </p>
         </div>
 
-        <a href="{{ route('manage-registration.lecturers.index') }}"
+        <a href="{{ route('registration.lecturers.index') }}"
            class="btn btn-secondary">
             Back to Lecturers
         </a>
@@ -68,12 +68,12 @@
 
             <div class="d-flex gap-2">
 
-                <a href="{{ route('manage-registration.lecturers.edit', $lecturer->id) }}"
+                <a href="{{ route('registration.lecturers.edit', $lecturer->id) }}"
                    class="btn btn-warning">
                     Edit Lecturer
                 </a>
 
-                <form action="{{ route('manage-registration.lecturers.destroy', $lecturer->id) }}"
+                <form action="{{ route('registration.lecturers.destroy', $lecturer->id) }}"
                       method="POST"
                       onsubmit="return confirm('Delete this lecturer?')">
 

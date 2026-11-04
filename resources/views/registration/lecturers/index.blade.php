@@ -12,7 +12,7 @@
             </p>
         </div>
 
-        <a href="{{ route('manage-registration.lecturers.create') }}"
+        <a href="{{ route('registration.lecturers.create') }}"
            class="btn btn-primary">
             + Add Lecturer
         </a>
@@ -30,7 +30,7 @@
         <div class="card-body">
 
             <form method="GET"
-                  action="{{ route('manage-registration.lecturers.index') }}"
+                  action="{{ route('registration.lecturers.index') }}"
                   class="row g-3 mb-4">
 
                 <div class="col-md-6">
@@ -115,17 +115,17 @@
                             <td>
                                 <div class="d-flex gap-1">
 
-                                    <a href="{{ route('manage-registration.lecturers.show', $lecturer->id) }}"
+                                    <a href="{{ route('registration.lecturers.show', $lecturer->id) }}"
                                        class="btn btn-sm btn-info text-white">
                                         View
                                     </a>
 
-                                    <a href="{{ route('manage-registration.lecturers.edit', $lecturer->id) }}"
+                                    <a href="{{ route('registration.lecturers.edit', $lecturer->id) }}"
                                        class="btn btn-sm btn-warning">
                                         Edit
                                     </a>
 
-                                    <form action="{{ route('manage-registration.lecturers.destroy', $lecturer->id) }}"
+                                    <form action="{{ route('registration.lecturers.destroy', $lecturer->id) }}"
                                           method="POST"
                                           onsubmit="return confirm('Are you sure you want to delete this lecturer?')">
 

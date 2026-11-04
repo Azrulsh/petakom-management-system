@@ -3,8 +3,8 @@
 @endphp
 
 <form action="{{ $student
-    ? route('manage-registration.students.update', $student->id)
-    : route('manage-registration.students.store') }}"
+    ? route('registration.students.update', $student->id)
+    : route('registration.students.store') }}"
     method="POST">
 
     @csrf
@@ -124,7 +124,7 @@
 
     <div class="d-flex justify-content-end gap-2">
 
-        <a href="{{ route('manage-registration.students.index') }}"
+        <a href="{{ route('registration.students.index') }}"
            class="btn btn-secondary">
             Cancel
         </a>

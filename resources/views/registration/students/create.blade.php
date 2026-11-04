@@ -5,15 +5,14 @@
 <div class="container-fluid py-4">
 
     <div class="mb-4">
-        <h3 class="fw-bold">Edit Lecturer</h3>
-        <p class="text-muted">
-            Update lecturer information.
-        </p>
+        <h3 class="fw-bold">Add New Student</h3>
+        <p class="text-muted">Register a new PETAKOM student.</p>
     </div>
 
     @if($errors->any())
         <div class="alert alert-danger">
-            <ul class="mb-0">
+            <strong>Please correct the following errors:</strong>
+            <ul class="mb-0 mt-2">
                 @foreach($errors->all() as $error)
                     <li>{{ $error }}</li>
                 @endforeach
@@ -23,11 +22,7 @@
 
     <div class="card border-0 shadow-sm">
         <div class="card-body p-4">
-
-            @include('manage-registration.lecturers.form', [
-                'lecturer' => $lecturer
-            ])
-
+            @include('registration.students.form', ['student' => null])
         </div>
     </div>
 

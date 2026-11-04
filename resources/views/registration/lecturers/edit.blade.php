@@ -5,9 +5,9 @@
 <div class="container-fluid py-4">
 
     <div class="mb-4">
-        <h3 class="fw-bold">Edit Student</h3>
+        <h3 class="fw-bold">Edit Lecturer</h3>
         <p class="text-muted">
-            Update student registration information.
+            Update lecturer information.
         </p>
     </div>
 
@@ -23,7 +23,11 @@
 
     <div class="card border-0 shadow-sm">
         <div class="card-body p-4">
-            @include('manage-registration.students.form', ['student' => $student])
+
+            @include('registration.lecturers.form', [
+                'lecturer' => $lecturer
+            ])
+
         </div>
     </div>
 

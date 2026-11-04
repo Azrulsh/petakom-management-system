@@ -143,7 +143,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware(['role:admin'])
         ->prefix('registrations')
-        ->name('manage-registration.')
+        ->name('registration.')
         ->group(function () {
 
             Route::resource('students', StudentController::class);
