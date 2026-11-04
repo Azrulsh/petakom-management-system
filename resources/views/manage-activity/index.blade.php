@@ -85,8 +85,15 @@
                                     {{ $activity->venue }}
                                 </td>
 
-                                <td>
-                                    @if(auth()->user()->isAdmin() || auth()->user()->isCoordinator() || auth()->user()->isCommittee())
+                                <td>                              
+                                    @if(
+                                        auth()->user()->isAdmin()
+                                        || auth()->user()->isCoordinator()
+                                        || (
+                                            auth()->user()->isCommittee()
+                                            && $activity->user_id === auth()->id()
+                                        )
+                                    )
 
                                         <form action="{{ route('manage-activity.update-status', $activity->id) }}"
                                             method="POST">
@@ -98,17 +105,17 @@
                                                     onchange="this.form.submit()">
 
                                                 <option value="upcoming"
-                                                    {{ $activity->status == 'upcoming' ? 'selected' : '' }}>
+                                                    @selected($activity->status === 'upcoming')>
                                                     Upcoming
                                                 </option>
 
                                                 <option value="ongoing"
-                                                    {{ $activity->status == 'ongoing' ? 'selected' : '' }}>
+                                                    @selected($activity->status === 'ongoing')>
                                                     Ongoing
                                                 </option>
 
                                                 <option value="completed"
-                                                    {{ $activity->status == 'completed' ? 'selected' : '' }}>
+                                                    @selected($activity->status === 'completed')>
                                                     Completed
                                                 </option>
 
@@ -116,21 +123,24 @@
                                         </form>
 
                                     @else
-
-                                        @php
-                                            $statusClass = match($activity->status) {
-                                                'upcoming' => 'bg-primary',
-                                                'ongoing' => 'bg-warning text-dark',
-                                                'completed' => 'bg-success',
-                                                default => 'bg-secondary',
-                                            };
-                                        @endphp
-
-                                        <span class="badge {{ $statusClass }}">
+                                        <span class="text-muted">
                                             {{ ucfirst($activity->status) }}
                                         </span>
-
                                     @endif
+
+                                    @php
+                                        $statusClass = match($activity->status) {
+                                            'upcoming' => 'bg-primary',
+                                            'ongoing' => 'bg-warning text-dark',
+                                            'completed' => 'bg-success',
+                                            default => 'bg-secondary',
+                                        };
+                                    @endphp
+
+                                    <span class="badge {{ $statusClass }}">
+                                        {{ ucfirst($activity->status) }}
+                                    </span>
+
                                 </td>
 
                                 <td>
@@ -143,12 +153,21 @@
                                         <i class="bi bi-eye"></i> View
                                     </a>
 
-                                    @if(auth()->user()->isAdmin() || auth()->user()->isCoordinator() || auth()->user()->isCommittee())
+                                    
+                                    @if(
+                                        auth()->user()->isAdmin()
+                                        || auth()->user()->isCoordinator()
+                                        || (
+                                            auth()->user()->isCommittee()
+                                            && $activity->user_id === auth()->id()
+                                        )
+                                    )
                                         <a href="{{ route('manage-activity.edit', $activity->id) }}"
                                         class="btn btn-sm btn-warning">
                                             <i class="bi bi-pencil"></i> Edit
                                         </a>
                                     @endif
+
  
                                     @if(auth()->user()->isAdmin() || auth()->user()->isCoordinator())
                                         <form action="{{ route('manage-activity.destroy', $activity->id) }}"

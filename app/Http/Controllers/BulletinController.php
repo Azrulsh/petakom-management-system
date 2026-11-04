@@ -261,8 +261,8 @@ class BulletinController extends Controller
             throw $e;
         }
 
-        // Remove old file only after successful database update
-        if ($newAttachment && $oldAttachment) {
+        // Remove old file only if it exists and has been replaced
+        if ($newAttachment && $oldAttachmentExists) {
             Storage::disk('public')->delete($oldAttachment);
         }
 

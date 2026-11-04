@@ -125,35 +125,49 @@ class ActivityController extends Controller
 
         return view('manage-activity.show', compact('activity'));
     }
-
+    
     public function edit(Activity $activity)
     {
-       /** @var \App\Models\User $user */
+        /** @var \App\Models\User $user */
         $user = Auth::user();
 
+        // Admin and Coordinator can edit all activities.
+        // Active Committee can only edit their own activities.
+        $canEdit = $user->isAdmin()
+            || $user->isCoordinator()
+            || (
+                $user->isCommittee()
+                && $activity->user_id === $user->id
+            );
+
         abort_unless(
-            $user->isAdmin() ||
-            $user->isCoordinator() ||
-            $user->isCommittee(),
+            $canEdit,
             403,
-            'Unauthorized access.'
+            'You are not authorized to edit this activity.'
         );
 
         return view('manage-activity.edit', compact('activity'));
     }
 
+
     public function update(Request $request, Activity $activity)
     {
+        
         // Role-based authorization
         /** @var \App\Models\User $user */
         $user = Auth::user();
 
+        $canUpdate = $user->isAdmin()
+            || $user->isCoordinator()
+            || (
+                $user->isCommittee()
+                && $activity->user_id === $user->id
+            );
+
         abort_unless(
-            $user->isAdmin() ||
-            $user->isCoordinator() ||
-            $user->isCommittee(),
+            $canUpdate,
             403,
-            'Unauthorized access.'
+            'You are not authorized to update this activity.'
         );
 
         // Validate activity information
@@ -210,20 +224,25 @@ class ActivityController extends Controller
             ->route('manage-activity.index')
             ->with('success', 'Activity deleted successfully.');
     }
-
+ 
     public function updateStatus(Request $request, Activity $activity)
     {
-        // Role-based authorization
         /** @var \App\Models\User $user */
-            $user = Auth::user();
+        $user = Auth::user();
 
-            abort_unless(
-                $user->isAdmin() ||
-                $user->isCoordinator() ||
-                $user->isCommittee(),
-                403,
-                'Unauthorized access.'
+        // Role and ownership authorization
+        $canUpdateStatus = $user->isAdmin()
+            || $user->isCoordinator()
+            || (
+                $user->isCommittee()
+                && $activity->user_id === $user->id
             );
+
+        abort_unless(
+            $canUpdateStatus,
+            403,
+            'You are not authorized to update this activity status.'
+        );
 
         // Validate status
         $validated = $request->validate([

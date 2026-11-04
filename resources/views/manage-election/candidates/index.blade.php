@@ -136,7 +136,7 @@
                                         {{-- Admin / Coordinator Actions --}}
                                         @if(auth()->user()->isAdmin() || auth()->user()->isCoordinator())
 
-                                            @if($candidate->status === 'pending')
+                                            @if($candidate->status === 'pending'&& $election->status === 'open')
                                                 <div class="d-flex gap-2">
 
                                                     {{-- Approve --}}
@@ -215,9 +215,11 @@
                                                     <span class="text-muted">Approved</span>
                                                 @endif
 
-                                            @else
-                                                <span class="text-muted">Reviewed</span>
-                                            @endif
+                                                @else
+                                                    <span class="text-muted">
+                                                        {{ ucfirst($candidate->status) }}
+                                                    </span>
+                                                @endif
 
                                         {{-- Student Actions --}}
                                         @elseif(

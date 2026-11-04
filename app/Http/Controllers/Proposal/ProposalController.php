@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Proposal;
 use App\Http\Controllers\Controller;
 use App\Models\Proposal\Proposal;
 use App\Models\Proposal\ProposalReview;
-//use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -110,12 +109,30 @@ class ProposalController extends Controller
     {
         $this->ensureProposalOwner($request->user(), $proposal);
 
+        // Admin can edit any proposal.
+        // Students can only edit draft or rejected proposals.
+        abort_unless(
+            $request->user()->isAdmin() ||
+            in_array($proposal->status, ['draft', 'rejected'], true),
+            403,
+            'This proposal cannot be edited in its current status.'
+        );
+
         return view('manage-proposal.edit', compact('proposal'));
     }
 
     public function update(Request $request, Proposal $proposal)
     {
         $this->ensureProposalOwner($request->user(), $proposal);
+
+        // Only Admin can edit proposals regardless of status.
+        // Students can only edit draft or rejected proposals.
+        abort_unless(
+            $request->user()->isAdmin() ||
+            in_array($proposal->status, ['draft', 'rejected'], true),
+            403,
+            'This proposal cannot be edited in its current status.'
+        );
 
         $validated = $request->validate([
             'title' => ['required', 'string', 'max:255'],
@@ -189,10 +206,20 @@ class ProposalController extends Controller
     {
         $this->ensureProposalOwner($request->user(), $proposal);
 
+        // Admin can delete proposals regardless of status.
+        // Students can only delete draft or rejected proposals.
+        abort_unless(
+            $request->user()->isAdmin() ||
+            in_array($proposal->status, ['draft', 'rejected'], true),
+            403,
+            'This proposal cannot be deleted in its current status.'
+        );
+
         // Preserve proposals that have related records.
         if (
             $proposal->reviews()->exists() ||
-            $proposal->activityReports()->exists()
+            $proposal->activityReports()->exists() ||
+            $proposal->activity()->exists()
         ) {
             return back()->with(
                 'error',

@@ -127,7 +127,7 @@ class CalendarController extends Controller
 
         // Only reminder owner or Admin can update
         abort_unless(
-            $user->isAdmin() || $reminder->user_id == $user->id,
+            $user->isAdmin() || $reminder->user_id === $user->id,
             403,
             'You are not authorized to update this reminder.'
         );

@@ -201,6 +201,13 @@ class CandidateController extends Controller
             'Only pending candidates can be reviewed.'
         );
 
+        // Candidate review is only allowed while election is open
+        abort_unless(
+            $election->status === 'open',
+            403,
+            'Candidate review is only allowed while the election is open.'
+        );
+
         $candidate->update([
             'status' => $validated['status'],
             'reviewed_by' => $user->id,

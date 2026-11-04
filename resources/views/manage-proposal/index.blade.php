@@ -258,7 +258,6 @@
 
                                 </td>
 
-
                                 <td>
 
                                     <a href="{{ route('manage-proposal.proposals.show', $proposal->id) }}"
@@ -267,8 +266,12 @@
                                     </a>
 
 
-                                    @if($proposal->status === 'draft' || $proposal->status === 'rejected')
-
+                                    @if(auth()->user()->isAdmin() ||
+                                        (
+                                            (int) $proposal->user_id === (int) auth()->id() &&
+                                            in_array($proposal->status, ['draft', 'rejected'], true)
+                                        )
+                                    )
                                         <a href="{{ route('manage-proposal.proposals.edit', $proposal->id) }}"
                                            class="btn btn-sm btn-warning">
                                             Edit
@@ -277,7 +280,11 @@
                                     @endif
 
 
-                                    @if($proposal->status === 'draft')
+                                    @if(
+                                        (auth()->user()->isAdmin() ||
+                                        (int) $proposal->user_id === (int) auth()->id())
+                                        && in_array($proposal->status, ['draft', 'rejected'], true)
+                                    )
 
                                         <form action="{{ route('manage-proposal.proposals.submit', $proposal->id) }}"
                                               method="POST"
@@ -295,22 +302,29 @@
 
                                     @endif
 
+                                    @if(
+                                        auth()->user()->isAdmin() ||
+                                        (
+                                            (int) $proposal->user_id === (int) auth()->id() &&
+                                            in_array($proposal->status, ['draft', 'rejected'], true)
+                                        )
+                                    )
 
-                                    <form action="{{ route('manage-proposal.proposals.destroy', $proposal->id) }}"
-                                          method="POST"
-                                          class="d-inline"
-                                          onsubmit="return confirm('Are you sure you want to delete this proposal?')">
+                                        <form action="{{ route('manage-proposal.proposals.destroy', $proposal->id) }}"
+                                            method="POST"
+                                            class="d-inline"
+                                            onsubmit="return confirm('Are you sure you want to delete this proposal?')">
 
-                                        @csrf
-                                        @method('DELETE')
+                                            @csrf
+                                            @method('DELETE')
 
-                                        <button type="submit"
-                                                class="btn btn-sm btn-danger">
-                                            Delete
-                                        </button>
+                                            <button type="submit" class="btn btn-sm btn-danger">
+                                                Delete
+                                            </button>
 
-                                    </form>
+                                        </form>
 
+                                    @endif
                                 </td>
 
                             </tr>

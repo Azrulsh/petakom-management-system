@@ -22,6 +22,7 @@ return new class extends Migration
 
             $table->string('position');
             $table->string('academic_session');
+            $table->unique(['student_id', 'academic_session'], 'committees_student_session_unique');
             $table->date('appointed_at')->nullable();
 
             $table->string('status')->default('active');

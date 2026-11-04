@@ -13,34 +13,66 @@ class ProposalReportController extends Controller
      */
     public function index()
     {
+        /** @var \App\Models\User $user */
+        $user = auth()->user();
+
+        abort_unless($user, 403);
+
+        $canViewAll = $user->isAdmin()
+            || $user->isLecturer()
+            || $user->isCoordinator();
+
+        // Proposal query
+        $proposalQuery = Proposal::query();
+
+        // Activity Report query
+        $activityReportQuery = ActivityReport::query();
+
+        // Students can only view reports related to their own proposals
+        if (!$canViewAll) {
+            $proposalQuery->where('user_id', $user->id);
+
+            $activityReportQuery->whereHas('proposal', function ($query) use ($user) {
+                $query->where('user_id', $user->id);
+            });
+        }
+
         // Proposal Statistics
-        $totalProposals = Proposal::count();
+        $totalProposals = (clone $proposalQuery)->count();
 
-        $draftProposals = Proposal::where('status', 'draft')->count();
+        $draftProposals = (clone $proposalQuery)
+            ->where('status', 'draft')->count();
 
-        $pendingProposals = Proposal::where('status', 'pending')->count();
+        $pendingProposals = (clone $proposalQuery)
+            ->where('status', 'pending')->count();
 
-        $approvedProposals = Proposal::where('status', 'approved')->count();
+        $approvedProposals = (clone $proposalQuery)
+            ->where('status', 'approved')->count();
 
-        $rejectedProposals = Proposal::where('status', 'rejected')->count();
+        $rejectedProposals = (clone $proposalQuery)
+            ->where('status', 'rejected')->count();
 
         // Activity Report Statistics
-        $totalActivityReports = ActivityReport::count();
+        $totalActivityReports = (clone $activityReportQuery)->count();
 
-        $totalAttendance = ActivityReport::sum('actual_attendance');
+        $totalAttendance = (clone $activityReportQuery)
+            ->sum('actual_attendance');
 
-        $totalExpenditure = ActivityReport::sum('actual_expenditure');
+        $totalExpenditure = (clone $activityReportQuery)
+            ->sum('actual_expenditure');
 
         // Latest Proposals
-        $proposals = Proposal::latest()->paginate(10, ['*'], 'proposals_page');
+        $proposals = (clone $proposalQuery)
+            ->latest()
+            ->paginate(10, ['*'], 'proposals_page');
 
         // Latest Activity Reports
-        $activityReports = ActivityReport::with('proposal')
+        $activityReports = (clone $activityReportQuery)
+            ->with('proposal')
             ->latest('activity_date')
             ->paginate(10, ['*'], 'activity_reports_page');
 
-
-        return view('manage-proposal.reports.index', compact(
+            return view('manage-proposal.reports.index', compact(
             'totalProposals',
             'draftProposals',
             'pendingProposals',
@@ -53,4 +85,5 @@ class ProposalReportController extends Controller
             'activityReports'
         ));
     }
+    
 }

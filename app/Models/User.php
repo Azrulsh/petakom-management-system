@@ -84,7 +84,6 @@ class User extends Authenticatable
         return in_array($this->role, (array) $roles, true);
     }
 
-
     // ==========================================
     // SPECIFIC ROLE CHECK
     // ==========================================
@@ -108,7 +107,6 @@ class User extends Authenticatable
     {
         return $this->hasRole(self::ROLE_COORDINATOR);
     }
-
 
     // ==========================================
     // COMMITTEE MEMBERSHIP CHECK

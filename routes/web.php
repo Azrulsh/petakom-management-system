@@ -240,36 +240,41 @@ Route::middleware(['auth'])->group(function () {
 
         });
 
+        // MANAGE PROPOSAL
+        // ADMIN & STUDENT
+        // ==========================================
 
-    // =================================================
-    // MANAGE PROPOSAL
-    // Authorized PETAKOM roles.
-    // =================================================
+        Route::middleware(['auth', 'role:student'])
+            ->name('manage-proposal.')
+            ->group(function () {
 
-    Route::middleware([
-        'role:student,lecturer,committee,coordinator'
-    ])
-        ->name('manage-proposal.')
-        ->group(function () {
+                // Activity Proposal Management
+                Route::resource('proposals', ProposalController::class);
 
-            // Activity Proposal Management
-            Route::resource('proposals', ProposalController::class);
+                // Submit Proposal
+                Route::post('/proposals/{proposal}/submit', [
+                    ProposalController::class,
+                    'submit'
+                ])->name('proposals.submit');
 
-            // Generate Reports
-            Route::get('/proposal-reports', [
-                ProposalReportController::class,
-                'index'
-            ])->name('reports.index');
+            });
 
-            // Submit Proposal
-            Route::post('/proposals/{proposal}/submit', [
-                ProposalController::class,
-                'submit'
-            ])->name('proposals.submit');
 
-            
+        // ==========================================
+        // PROPOSAL REPORTS
+        // ALL AUTHENTICATED USERS
+        // ==========================================
 
-        });
+        Route::middleware(['auth'])
+            ->name('manage-proposal.')
+            ->group(function () {
+
+                Route::get('/proposal-reports', [
+                    ProposalReportController::class,
+                    'index'
+                ])->name('reports.index');
+
+            });
 
         // ==========================================
         // MANAGE COMMITTEE ELECTION
