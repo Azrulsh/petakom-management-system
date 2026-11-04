@@ -50,7 +50,7 @@ class BulletinController extends Controller
             ->paginate(10)
             ->withQueryString();
 
-        return view('manage-bulletin.index', compact(
+        return view('bulletin.index', compact(
             'bulletins',
             'canManageAll'
         ));
@@ -72,7 +72,7 @@ class BulletinController extends Controller
             'You are not authorized to create bulletins.'
         );
 
-        return view('manage-bulletin.create');
+        return view('bulletin.create');
     }
     
     public function store(Request $request)
@@ -131,7 +131,7 @@ class BulletinController extends Controller
         ]);
 
         return redirect()
-            ->route('manage-bulletin.index')
+            ->route('bulletin.index')
             ->with('success', 'Bulletin created successfully.');
     }
 
@@ -159,7 +159,7 @@ class BulletinController extends Controller
 
         $bulletin->load('user');
 
-        return view('manage-bulletin.show', compact('bulletin'));
+        return view('bulletin.show', compact('bulletin'));
     }
     
     public function edit(Bulletin $bulletin)
@@ -185,7 +185,7 @@ class BulletinController extends Controller
             'You are not authorized to edit this bulletin.'
         );
 
-        return view('manage-bulletin.edit', compact('bulletin'));
+        return view('bulletin.edit', compact('bulletin'));
     }
   
     public function update(Request $request, Bulletin $bulletin)
@@ -267,7 +267,7 @@ class BulletinController extends Controller
         }
 
         return redirect()
-            ->route('manage-bulletin.show', $bulletin->id)
+            ->route('bulletin.show', $bulletin->id)
             ->with('success', 'Bulletin updated successfully.');
     }
 
@@ -309,7 +309,7 @@ class BulletinController extends Controller
         }
 
         return redirect()
-            ->route('manage-bulletin.index')
+            ->route('bulletin.index')
             ->with('success', 'Bulletin deleted successfully.');
     }
 

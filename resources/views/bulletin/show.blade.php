@@ -6,55 +6,62 @@
 
 <div class="container-fluid py-4">
 
-    {{-- Page Header --}}
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <div>
-            <h3 class="fw-bold mb-1">Bulletin Details</h3>
-            <p class="text-muted mb-0">
-                PETAKOM and Faculty Announcement
-            </p>
-        </div>
+   {{-- Page Header --}}
+<div class="d-flex justify-content-between align-items-center mb-4">
 
-        @php
-            $user = auth()->user();
+    {{-- Page Title --}}
+    <div>
+        <h3 class="fw-bold mb-1">Bulletin Details</h3>
+        <p class="text-muted mb-0">
+            PETAKOM and Faculty Announcement
+        </p>
+    </div>
 
-            $canEdit = $user->isAdmin()
-                || ($user->isCoordinator() && $bulletin->user_id === $user->id)
-                || (
-                    $user->isCommittee()
-                    && $bulletin->user_id === $user->id
-                    && $bulletin->type === 'petakom'
-                );
-        @endphp
+    {{-- Action Buttons --}}
+    <div class="d-flex align-items-center gap-2">
+            @php
+                $user = auth()->user();
 
-        @if($canEdit)
+                $canEdit = $user->isAdmin()
+                    || ($user->isCoordinator() && $bulletin->user_id === $user->id)
+                    || (
+                        $user->isCommittee()
+                        && $bulletin->user_id === $user->id
+                        && $bulletin->type === 'petakom'
+                    );
+            @endphp
 
-            <a href="{{ route('manage-bulletin.edit', $bulletin->id) }}"
-            class="btn btn-primary">
-                <i class="fas fa-edit me-1"></i>
-                Edit Bulletin
+            @if($canEdit)
+
+                <a href="{{ route('bulletin.edit', $bulletin->id) }}"
+                class="btn btn-primary">
+                    <i class="fas fa-edit me-1"></i>
+                    Edit Bulletin
+                </a>
+
+                <form method="POST"
+                    action="{{ route('bulletin.destroy', $bulletin->id) }}"
+                    class="d-inline">
+                    @csrf
+                    @method('DELETE')
+
+                    <button type="submit"
+                            class="btn btn-danger"
+                            onclick="return confirm('Are you sure you want to delete this bulletin?')">
+                        <i class="fas fa-trash me-1"></i>
+                        Delete Bulletin
+                    </button>
+                </form>
+
+            @endif
+
+            <a href="{{ route('bulletin.index') }}"
+            class="btn btn-secondary">
+                Back
             </a>
 
-            <form method="POST"
-                action="{{ route('manage-bulletin.destroy', $bulletin->id) }}"
-                class="d-inline">
-                @csrf
-                @method('DELETE')
+        </div>
 
-                <button type="submit"
-                        class="btn btn-danger"
-                        onclick="return confirm('Are you sure you want to delete this bulletin?')">
-                    <i class="fas fa-trash me-1"></i>
-                    Delete Bulletin
-                </button>
-            </form>
-
-        @endif
-
-        <a href="{{ route('manage-bulletin.index') }}"
-           class="btn btn-secondary">
-            Back
-        </a>
     </div>
 
     @if(session('success'))

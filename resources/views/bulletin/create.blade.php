@@ -1,18 +1,19 @@
 @extends('layouts.header-sidebar')
 
-@section('title', 'Edit Bulletin')
+@section('title', 'Create Bulletin')
 
 @section('content')
 
 <div class="container-fluid py-4">
 
     <div class="mb-4">
-        <h3 class="fw-bold mb-1">Edit Bulletin</h3>
+        <h3 class="fw-bold mb-1">Create Bulletin</h3>
         <p class="text-muted mb-0">
-            Update PETAKOM or Faculty announcement.
+            Create a PETAKOM or Faculty announcement.
         </p>
     </div>
 
+    {{-- Validation Errors --}}
     @if($errors->any())
         <div class="alert alert-danger">
             <ul class="mb-0">
@@ -26,9 +27,8 @@
     <div class="card border-0 shadow-sm">
         <div class="card-body">
 
-            <form method="POST" action="{{ route('manage-bulletin.update', $bulletin->id) }}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('bulletin.store') }}" enctype="multipart/form-data">
                 @csrf
-                @method('PUT')
 
                 <div class="row g-3">
 
@@ -42,7 +42,7 @@
                                name="title"
                                id="title"
                                class="form-control"
-                               value="{{ old('title', $bulletin->title) }}"
+                               value="{{ old('title') }}"
                                maxlength="255"
                                required>
                     </div>
@@ -58,14 +58,16 @@
                                 class="form-select"
                                 required>
 
+                            <option value="">-- Select Type --</option>
+
                             <option value="petakom"
-                                @selected(old('type', $bulletin->type) === 'petakom')>
+                                @selected(old('type') === 'petakom')>
                                 PETAKOM Bulletin
                             </option>
 
                             @if(auth()->user()->isAdmin() || auth()->user()->isCoordinator())
                                 <option value="faculty"
-                                    @selected(old('type', $bulletin->type) === 'faculty')>
+                                    @selected(old('type') === 'faculty')>
                                     Faculty Bulletin
                                 </option>
                             @endif
@@ -85,13 +87,13 @@
                                 required>
 
                             <option value="draft"
-                                @selected(old('status', $bulletin->status) === 'draft')>
-                                Draft
+                                @selected(old('status', 'draft') === 'draft')>
+                                Save as Draft
                             </option>
 
                             <option value="published"
-                                @selected(old('status', $bulletin->status) === 'published')>
-                                Published
+                                @selected(old('status') === 'published')>
+                                Publish Now
                             </option>
 
                         </select>
@@ -107,32 +109,14 @@
                                   id="content"
                                   class="form-control"
                                   rows="7"
-                                  required>{{ old('content', $bulletin->content) }}</textarea>
+                                  required
+                                  placeholder="Enter bulletin announcement details...">{{ old('content') }}</textarea>
                     </div>
 
-                    {{-- Existing Attachment --}}
-                    @if($bulletin->attachment)
-                        <div class="col-12">
-                            <label class="form-label">
-                                Current Attachment
-                            </label>
-
-                            <div>
-                                <a href="{{ asset('storage/' . $bulletin->attachment) }}"
-                                   target="_blank"
-                                   rel="noopener noreferrer"
-                                   class="btn btn-outline-secondary btn-sm">
-                                    <i class="fas fa-paperclip me-1"></i>
-                                    View Current Attachment
-                                </a>
-                            </div>
-                        </div>
-                    @endif
-
-                    {{-- New Attachment --}}
+                    {{-- Optional Attachment --}}
                     <div class="col-12">
                         <label for="attachment" class="form-label">
-                            Replace Attachment (Optional)
+                            Attachment (Optional)
                         </label>
 
                         <input type="file"
@@ -142,8 +126,7 @@
                                accept=".pdf,.jpg,.jpeg,.png">
 
                         <div class="form-text">
-                            Leave empty to keep the current attachment.
-                            Maximum file size: 5 MB.
+                            Supported formats: PDF, JPG, JPEG, PNG.
                         </div>
                     </div>
 
@@ -151,13 +134,13 @@
 
                 <div class="d-flex justify-content-end gap-2 mt-4">
 
-                    <a href="{{ route('manage-bulletin.show', $bulletin->id) }}"
+                    <a href="{{ route('bulletin.index') }}"
                        class="btn btn-secondary">
                         Cancel
                     </a>
 
                     <button type="submit" class="btn btn-primary">
-                        Update Bulletin
+                        Save Bulletin
                     </button>
 
                 </div>

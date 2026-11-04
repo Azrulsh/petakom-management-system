@@ -20,7 +20,7 @@
             || auth()->user()->isCoordinator()
             || auth()->user()->isCommittee()
         )
-            <a href="{{ route('manage-bulletin.create') }}"
+            <a href="{{ route('bulletin.create') }}"
             class="btn btn-primary">
                 <i class="fas fa-plus me-1"></i>
                 Add Bulletin
@@ -47,7 +47,7 @@
         <div class="card-body">
 
             <form method="GET"
-                  action="{{ route('manage-bulletin.index') }}">
+                  action="{{ route('bulletin.index') }}">
 
                 <div class="row g-3 align-items-end">
 
@@ -96,7 +96,7 @@
                                 Search
                             </button>
 
-                            <a href="{{ route('manage-bulletin.index') }}"
+                            <a href="{{ route('bulletin.index') }}"
                                class="btn btn-secondary">
                                 Reset
                             </a>
@@ -195,7 +195,7 @@
                                     <div class="d-flex gap-2">
 
                                         {{-- View --}}
-                                        <a href="{{ route('manage-bulletin.show', $bulletin->id) }}"
+                                        <a href="{{ route('bulletin.show', $bulletin->id) }}"
                                         class="btn btn-info btn-sm text-white">
                                             <i class="fas fa-eye me-1"></i>
                                             View
@@ -205,7 +205,7 @@
                                         @if($canManage)
 
                                             <form method="POST"
-                                                action="{{ route('manage-bulletin.update-status', $bulletin->id) }}">
+                                                action="{{ route('bulletin.update-status', $bulletin->id) }}">
                                                 @csrf
                                                 @method('PATCH')
 

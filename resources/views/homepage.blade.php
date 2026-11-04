@@ -787,7 +787,7 @@
 
                 @if($canSeeBulletin)
 
-                    <a href="{{ route('manage-bulletin.index') }}"
+                    <a href="{{ route('bulletin.index') }}"
                     class="home-card">
 
                         <div class="home-icon">

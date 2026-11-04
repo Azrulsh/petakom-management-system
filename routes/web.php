@@ -333,7 +333,7 @@ Route::middleware(['auth'])->group(function () {
 
     Route::middleware(['auth'])
         ->prefix('bulletins')
-        ->name('manage-bulletin.')
+        ->name('bulletin.')
         ->group(function () {
 
             // View Bulletin List
