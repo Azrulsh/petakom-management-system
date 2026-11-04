@@ -85,7 +85,7 @@ class CalendarController extends Controller
             return response()->json($events);
         }
 
-        return view('manage-calendar.index');
+        return view('calendar.index');
     }
     
     public function create(Request $request)
