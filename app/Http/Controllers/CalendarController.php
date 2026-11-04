@@ -32,7 +32,7 @@ class CalendarController extends Controller
             // Get reminders within calendar date range
             $reminders = $remindersQuery
                 ->where('start', '<', $end)
-                ->where('end', '>', $start)
+                ->where('end', '>=', $start)
                 ->get(['id', 'title', 'start', 'end'])  
                 ->map(function ($reminder) {
                     return [

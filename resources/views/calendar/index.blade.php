@@ -218,8 +218,6 @@
 
 @endsection
 
-
-
 @push('scripts')
 
 <!-- jQuery -->
@@ -285,9 +283,45 @@ $(document).ready(function () {
 
             if (title) {
 
-                // Convert Moment.js objects to strings
-                var startDate = start.format('YYYY-MM-DD');
-                var endDate = end.format('YYYY-MM-DD');
+                var startDate = prompt(
+                    'Enter Start Date (YYYY-MM-DD):',
+                    start.format('YYYY-MM-DD')
+                );
+
+                if (!startDate) {
+                    $('#calendar').fullCalendar('unselect');
+                    return;
+                }
+
+                // FullCalendar end date is exclusive
+                var defaultEndDate = end.clone()
+                    .subtract(1, 'days')
+                    .format('YYYY-MM-DD');
+
+                var endDate = prompt(
+                    'Enter End Date (YYYY-MM-DD):',
+                    defaultEndDate
+                );
+
+                if (!endDate) {
+                    $('#calendar').fullCalendar('unselect');
+                    return;
+                }
+
+                if (
+                    !moment(startDate, 'YYYY-MM-DD', true).isValid() ||
+                    !moment(endDate, 'YYYY-MM-DD', true).isValid()
+                ) {
+                    alert('Please enter valid dates.');
+                    $('#calendar').fullCalendar('unselect');
+                    return;
+                }
+
+                if (moment(endDate).isBefore(moment(startDate))) {
+                    alert('End Date cannot be earlier than Start Date.');
+                    $('#calendar').fullCalendar('unselect');
+                    return;
+                }
 
                 $.ajax({
                     url: "{{ route('calendar.create') }}",
@@ -316,7 +350,7 @@ $(document).ready(function () {
 
             $('#calendar').fullCalendar('unselect');
         },
-
+        
         // Delete Event      
         eventClick: function(event) {
 
