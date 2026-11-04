@@ -19,7 +19,7 @@
         {{-- Add Activity Button --}}
         @if(auth()->user()->isAdmin() || auth()->user()->isCoordinator() || auth()->user()->isCommittee())
 
-            <a href="{{ route('manage-activity.create') }}"
+            <a href="{{ route('activity.create') }}"
             class="btn btn-primary">
 
                 <i class="fas fa-plus me-1"></i>
@@ -95,7 +95,7 @@
                                         )
                                     )
 
-                                        <form action="{{ route('manage-activity.update-status', $activity->id) }}"
+                                        <form action="{{ route('activity.update-status', $activity->id) }}"
                                             method="POST">
                                             @csrf
                                             @method('PATCH')
@@ -128,19 +128,6 @@
                                         </span>
                                     @endif
 
-                                    @php
-                                        $statusClass = match($activity->status) {
-                                            'upcoming' => 'bg-primary',
-                                            'ongoing' => 'bg-warning text-dark',
-                                            'completed' => 'bg-success',
-                                            default => 'bg-secondary',
-                                        };
-                                    @endphp
-
-                                    <span class="badge {{ $statusClass }}">
-                                        {{ ucfirst($activity->status) }}
-                                    </span>
-
                                 </td>
 
                                 <td>
@@ -148,7 +135,7 @@
                                 </td>
   
                                 <td>
-                                    <a href="{{ route('manage-activity.show', $activity->id) }}"
+                                    <a href="{{ route('activity.show', $activity->id) }}"
                                     class="btn btn-sm btn-info text-white">
                                         <i class="bi bi-eye"></i> View
                                     </a>
@@ -162,7 +149,7 @@
                                             && $activity->user_id === auth()->id()
                                         )
                                     )
-                                        <a href="{{ route('manage-activity.edit', $activity->id) }}"
+                                        <a href="{{ route('activity.edit', $activity->id) }}"
                                         class="btn btn-sm btn-warning">
                                             <i class="bi bi-pencil"></i> Edit
                                         </a>
@@ -170,7 +157,7 @@
 
  
                                     @if(auth()->user()->isAdmin() || auth()->user()->isCoordinator())
-                                        <form action="{{ route('manage-activity.destroy', $activity->id) }}"
+                                        <form action="{{ route('activity.destroy', $activity->id) }}"
                                             method="POST"
                                             class="d-inline"
                                             onsubmit="return confirm('Are you sure you want to delete this activity?');">

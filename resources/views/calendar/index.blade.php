@@ -325,7 +325,7 @@ $(document).ready(function () {
 
                 var activityId = event.id.replace('activity_', '');
 
-                var activityUrl = "{{ route('manage-activity.show', ['activity' => '__ID__']) }}";
+                var activityUrl = "{{ route('activity.show', ['activity' => '__ID__']) }}";
 
                 window.location.href = activityUrl.replace('__ID__', activityId);
 

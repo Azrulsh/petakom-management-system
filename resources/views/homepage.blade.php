@@ -661,7 +661,7 @@
 
                 @if($canSeeActivity)
 
-                    <a href="{{ route('manage-activity.index') }}"
+                    <a href="{{ route('activity.index') }}"
                     class="home-card">
 
                         <div class="home-icon">

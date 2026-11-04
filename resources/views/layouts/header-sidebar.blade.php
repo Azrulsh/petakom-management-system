@@ -82,8 +82,8 @@
                 @endif
 
                 <li>
-                    <a href="{{ route('manage-activity.index') }}"
-                    class="{{ request()->routeIs('manage-activity.*') ? 'active' : '' }}">
+                    <a href="{{ route('activity.index') }}"
+                    class="{{ request()->routeIs('activity.*') ? 'active' : '' }}">
                         Activity
                     </a>
                 </li>

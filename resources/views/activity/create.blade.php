@@ -16,7 +16,7 @@
     <div class="card border-0 shadow-sm">
         <div class="card-body">
 
-            <form id="activityForm" action="{{ route('manage-activity.store') }}" method="POST">
+            <form id="activityForm" action="{{ route('activity.store') }}" method="POST">
                 @csrf
 
                 <div class="row g-3">
@@ -159,7 +159,7 @@
                 </div>
 
                 <div class="d-flex justify-content-end gap-2 mt-4">
-                    <a href="{{ route('manage-activity.index') }}"
+                    <a href="{{ route('activity.index') }}"
                        class="btn btn-secondary">
                         Cancel
                     </a>

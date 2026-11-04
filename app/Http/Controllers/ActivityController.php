@@ -17,7 +17,7 @@ class ActivityController extends Controller
             ->latest()
             ->paginate(10);
 
-        return view('manage-activity.index', compact('activities'));
+        return view('activity.index', compact('activities'));
     }
 
     public function create()
@@ -39,7 +39,7 @@ class ActivityController extends Controller
             ->latest()
             ->get();
 
-        return view('manage-activity.create', compact('proposals'));
+        return view('activity.create', compact('proposals'));
     }
 
     public function store(Request $request)
@@ -115,7 +115,7 @@ class ActivityController extends Controller
         ]);
 
         return redirect()
-            ->route('manage-activity.index')
+            ->route('activity.index')
             ->with('success', 'Activity created successfully.');
     }
 
@@ -123,7 +123,7 @@ class ActivityController extends Controller
     {
         $activity->load(['user', 'proposal']);
 
-        return view('manage-activity.show', compact('activity'));
+        return view('activity.show', compact('activity'));
     }
     
     public function edit(Activity $activity)
@@ -146,7 +146,7 @@ class ActivityController extends Controller
             'You are not authorized to edit this activity.'
         );
 
-        return view('manage-activity.edit', compact('activity'));
+        return view('activity.edit', compact('activity'));
     }
 
 
@@ -201,7 +201,7 @@ class ActivityController extends Controller
         $activity->update($validated);
 
         return redirect()
-            ->route('manage-activity.index')
+            ->route('activity.index')
             ->with('success', 'Activity updated successfully.');
     }
     
@@ -221,7 +221,7 @@ class ActivityController extends Controller
         $activity->delete();
 
         return redirect()
-            ->route('manage-activity.index')
+            ->route('activity.index')
             ->with('success', 'Activity deleted successfully.');
     }
  
@@ -255,7 +255,7 @@ class ActivityController extends Controller
         ]);
 
         return redirect()
-            ->route('manage-activity.index')
+            ->route('activity.index')
             ->with('success', 'Activity status updated successfully.');
     }
 
