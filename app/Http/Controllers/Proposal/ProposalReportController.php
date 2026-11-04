@@ -72,7 +72,7 @@ class ProposalReportController extends Controller
             ->latest('activity_date')
             ->paginate(10, ['*'], 'activity_reports_page');
 
-            return view('manage-proposal.reports.index', compact(
+            return view('proposal.reports.index', compact(
             'totalProposals',
             'draftProposals',
             'pendingProposals',

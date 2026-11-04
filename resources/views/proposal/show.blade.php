@@ -16,7 +16,7 @@
             </p>
         </div>
 
-        <a href="{{ route('manage-proposal.proposals.index') }}"
+        <a href="{{ route('proposal.proposals.index') }}"
            class="btn btn-secondary">
             Back
         </a>
@@ -100,7 +100,7 @@
 
             <div class="mt-3">
 
-                <a href="{{ route('manage-proposal.proposals.edit', $proposal->id) }}"
+                <a href="{{ route('proposal.proposals.edit', $proposal->id) }}"
                    class="btn btn-warning">
                     Edit Proposal
                 </a>
@@ -131,7 +131,7 @@
                         {{ $report->activity_date->format('d M Y') }}
                     </p>
 
-                    <a href="{{ route('manage-proposal.activity-reports.show', $report->id) }}">
+                    <a href="{{ route('proposal.activity-reports.show', $report->id) }}">
                         View Activity Report
                     </a>
 

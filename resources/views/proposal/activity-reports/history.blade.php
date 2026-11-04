@@ -19,7 +19,7 @@
             </p>
         </div>
 
-        <a href="{{ route('manage-proposal.activity-reports.index') }}"
+        <a href="{{ route('proposal.activity-reports.index') }}"
            class="btn btn-secondary">
             Back to Activity Reports
         </a>
@@ -34,7 +34,7 @@
             <a class="nav-link"
             href="{{ route('proposal-approvals.history.index') }}">
 
-                <i class="fas fa-file-alt mr-1"></i>
+                <i class="fas fa-file-alt"></i>
                 Proposal History
 
             </a>
@@ -42,9 +42,9 @@
 
         <li class="nav-item">
             <a class="nav-link active"
-            href="{{ route('manage-proposal.activity-reports.history') }}">
+            href="{{ route('proposal.activity-reports.history') }}">
 
-                <i class="fas fa-clipboard-check mr-1"></i>
+                <i class="fas fa-clipboard-check"></i>
                 Activity Report History
 
             </a>
@@ -58,7 +58,7 @@
         <div class="card-body">
 
             <form method="GET"
-                  action="{{ route('manage-proposal.activity-reports.history') }}">
+                  action="{{ route('proposal.activity-reports.history') }}">
 
                 <div class="row">
 
@@ -99,7 +99,7 @@
                             Search
                         </button>
 
-                        <a href="{{ route('manage-proposal.activity-reports.history') }}"
+                        <a href="{{ route('proposal.activity-reports.history') }}"
                            class="btn btn-secondary">
                             Reset
                         </a>
@@ -174,13 +174,13 @@
 
                                     @if($report->status === 'approved')
 
-                                        <span class="badge badge-success">
+                                        <span class="badge bg-success">
                                             Approved
                                         </span>
 
                                     @else
 
-                                        <span class="badge badge-danger">
+                                        <span class="badge bg-danger">
                                             Rejected
                                         </span>
 
@@ -200,7 +200,7 @@
 
                                 <td>
 
-                                    <a href="{{ route('manage-proposal.activity-reports.show', $report->id) }}"
+                                    <a href="{{ route('proposal.activity-reports.show', $report->id) }}"
                                        class="btn btn-sm btn-info">
 
                                         View Details

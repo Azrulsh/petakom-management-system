@@ -261,7 +261,7 @@
                     
                     <a href="{{ auth()->user()->isLecturer() || auth()->user()->isCoordinator()
                         ? route('proposal-approvals.index')
-                        : route('manage-proposal.proposals.index') }}"
+                        : route('proposal.proposals.index') }}"
                     class="home-card">
 
                         <div class="home-icon">

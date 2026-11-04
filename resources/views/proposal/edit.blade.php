@@ -69,19 +69,19 @@
             @endif
 
 
-            <form action="{{ route('manage-proposal.proposals.update', $proposal->id) }}"
+            <form action="{{ route('proposal.proposals.update', $proposal->id) }}"
                   method="POST">
 
                 @csrf
                 @method('PUT')
 
-                @include('manage-proposal._form')
+                @include('proposal._form')
 
                 <hr>
 
                 <div class="d-flex justify-content-between">
 
-                    <a href="{{ route('manage-proposal.proposals.index') }}"
+                    <a href="{{ route('proposal.proposals.index') }}"
                        class="btn btn-secondary">
 
                         <i class="fas fa-arrow-left"></i>
@@ -135,7 +135,7 @@
                 </div>
 
                 <form method="POST"
-                      action="{{ route('manage-proposal.proposals.submit', $proposal->id) }}">
+                      action="{{ route('proposal.proposals.submit', $proposal->id) }}">
 
                     @csrf
 

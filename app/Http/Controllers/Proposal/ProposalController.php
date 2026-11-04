@@ -50,14 +50,14 @@ class ProposalController extends Controller
             ->paginate(10)
             ->appends($request->query());
 
-        return view('manage-proposal.index', compact('proposals'));
+        return view('proposal.index', compact('proposals'));
     }
 
     public function create(Request $request)
     {
         $this->ensureCanManageProposals($request->user());
 
-        return view('manage-proposal.create');
+        return view('proposal.create');
     }
 
     public function store(Request $request)
@@ -92,7 +92,7 @@ class ProposalController extends Controller
         Proposal::create($validated);
 
         return redirect()
-            ->route('manage-proposal.proposals.index')
+            ->route('proposal.proposals.index')
             ->with('success', 'Proposal created successfully.');
     }
 
@@ -102,7 +102,7 @@ class ProposalController extends Controller
 
         $proposal->load('activityReports');
 
-        return view('manage-proposal.show', compact('proposal'));
+        return view('proposal.show', compact('proposal'));
     }
 
     public function edit(Request $request, Proposal $proposal)
@@ -118,7 +118,7 @@ class ProposalController extends Controller
             'This proposal cannot be edited in its current status.'
         );
 
-        return view('manage-proposal.edit', compact('proposal'));
+        return view('proposal.edit', compact('proposal'));
     }
 
     public function update(Request $request, Proposal $proposal)
@@ -153,7 +153,7 @@ class ProposalController extends Controller
         $proposal->update($validated);
 
         return redirect()
-            ->route('manage-proposal.proposals.index')
+            ->route('proposal.proposals.index')
             ->with('success', 'Proposal updated successfully.');
     } 
 
@@ -195,7 +195,7 @@ class ProposalController extends Controller
         }
 
         return redirect()
-            ->route('manage-proposal.proposals.index')
+            ->route('proposal.proposals.index')
             ->with(
                 'success',
                 'Proposal submitted successfully.'
@@ -230,7 +230,7 @@ class ProposalController extends Controller
         $proposal->delete();
 
         return redirect()
-            ->route('manage-proposal.proposals.index')
+            ->route('proposal.proposals.index')
             ->with('success', 'Proposal deleted successfully.');
     }
 
@@ -254,7 +254,7 @@ class ProposalController extends Controller
             ->appends($request->query());
 
         return view(
-            'manage-proposal.approvals.index',
+            'proposal.approvals.index',
             compact('proposals')
         );
     }
@@ -272,7 +272,7 @@ class ProposalController extends Controller
         $proposal->load('activityReports', 'reviewer');
 
         return view(
-            'manage-proposal.approvals.show',
+            'proposal.approvals.show',
             compact('proposal')
         );
     }
@@ -428,7 +428,7 @@ class ProposalController extends Controller
             ->appends($request->query());
 
         return view(
-            'manage-proposal.approvals.history-index',
+            'proposal.approvals.history-index',
             compact('proposals')
         );
     }
@@ -440,7 +440,7 @@ class ProposalController extends Controller
         $proposal->load('reviews.reviewer');
 
         return view(
-            'manage-proposal.approvals.history-show',
+            'proposal.approvals.history-show',
             compact('proposal')
         );
     }

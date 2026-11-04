@@ -34,7 +34,7 @@
 
             @if($isReviewer)
 
-                <a href="{{ route('manage-proposal.activity-reports.history') }}"
+                <a href="{{ route('proposal.activity-reports.history') }}"
                 class="btn btn-outline-dark">
                     <i class="fas fa-history"></i>
                     Approval History
@@ -44,7 +44,7 @@
 
             @if($isAdmin || $isCommittee)
 
-                <a href="{{ route('manage-proposal.activity-reports.create') }}"
+                <a href="{{ route('proposal.activity-reports.create') }}"
                 class="btn btn-danger">
                     + Create Activity Report
                 </a>
@@ -57,10 +57,12 @@
 
     {{-- SUCCESS MESSAGE --}}
     @if(session('success'))
-        <div class="alert alert-success alert-dismissible fade show">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
             {{ session('success') }}
-            <button type="button" class="close" data-dismiss="alert">
-                <span>&times;</span>
+            <button type="button" 
+                    class="btn-close" 
+                    data-bs-dismiss="alert" 
+                    aria-label="Close">
             </button>
         </div>
     @endif
@@ -69,8 +71,10 @@
     @if(session('error'))
         <div class="alert alert-danger alert-dismissible fade show">
             {{ session('error') }}
-            <button type="button" class="close" data-dismiss="alert">
-                <span>&times;</span>
+            <button type="button" 
+                    class="btn-close" 
+                    data-bs-dismiss="alert" 
+                    aria-label="Close">
             </button>
         </div>
     @endif
@@ -164,7 +168,7 @@
 
                                 {{-- STATUS --}}
                                 <td>
-                                    <span class="badge badge-{{ $statusClass }}">
+                                    <span class="badge bg-{{ $statusClass }}">
                                         {{ ucfirst($report->status) }}
                                     </span>
                                 </td>
@@ -175,7 +179,7 @@
                                     <div class="d-flex flex-wrap" style="gap:5px;">
 
                                         {{-- VIEW / REVIEW --}}
-                                        <a href="{{ route('manage-proposal.activity-reports.show', $report->id) }}"
+                                        <a href="{{ route('proposal.activity-reports.show', $report->id) }}"
                                            class="btn btn-sm btn-info">
 
                                             @if($isReviewer && $report->status === 'pending')
@@ -189,7 +193,7 @@
                                         {{-- EDIT --}}
                                         @if($canEditReport)
 
-                                            <a href="{{ route('manage-proposal.activity-reports.edit', $report->id) }}"
+                                            <a href="{{ route('proposal.activity-reports.edit', $report->id) }}"
                                                class="btn btn-sm btn-warning">
                                                 Edit
                                             </a>
@@ -199,7 +203,7 @@
                                         {{-- SUBMIT / RESUBMIT --}}
                                         @if($canSubmitReport)
 
-                                            <form action="{{ route('manage-proposal.activity-reports.submit', $report->id) }}"
+                                            <form action="{{ route('proposal.activity-reports.submit', $report->id) }}"
                                                   method="POST"
                                                   onsubmit="return confirm('Submit this activity report for approval?')">
 
@@ -219,7 +223,7 @@
                                         {{-- DELETE --}}
                                         @if($canEditReport)
 
-                                            <form action="{{ route('manage-proposal.activity-reports.destroy', $report->id) }}"
+                                            <form action="{{ route('proposal.activity-reports.destroy', $report->id) }}"
                                                   method="POST"
                                                   onsubmit="return confirm('Delete this activity report?')">
 

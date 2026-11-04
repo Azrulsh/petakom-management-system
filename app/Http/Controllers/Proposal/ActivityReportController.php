@@ -146,7 +146,7 @@ class ActivityReportController extends Controller
             ->appends($request->query());
 
         return view(
-            'manage-proposal.activity-reports.index',
+            'proposal.activity-reports.index',
             compact('activityReports')
         );
     }
@@ -167,7 +167,7 @@ class ActivityReportController extends Controller
             ->get();
 
         return view(
-            'manage-proposal.activity-reports.create',
+            'proposal.activity-reports.create',
             compact('proposals')
         );
     }
@@ -277,7 +277,7 @@ class ActivityReportController extends Controller
         ActivityReport::create($validated);
 
         return redirect()
-            ->route('manage-proposal.activity-reports.index')
+            ->route('proposal.activity-reports.index')
             ->with('success', 'Activity report created successfully.');
     }
 
@@ -310,7 +310,7 @@ class ActivityReportController extends Controller
         ]);
 
         return view(
-            'manage-proposal.activity-reports.show',
+            'proposal.activity-reports.show',
             compact('activityReport')
         );
     }
@@ -334,7 +334,7 @@ class ActivityReportController extends Controller
             ->get();
 
         return view(
-            'manage-proposal.activity-reports.edit',
+            'proposal.activity-reports.edit',
             compact('activityReport', 'proposals')
         );
     }
@@ -445,7 +445,7 @@ class ActivityReportController extends Controller
         $activityReport->update($validated);
 
         return redirect()
-            ->route('manage-proposal.activity-reports.index')
+            ->route('proposal.activity-reports.index')
             ->with('success', 'Activity report updated successfully.');
     }
 
@@ -468,7 +468,7 @@ class ActivityReportController extends Controller
         $activityReport->delete();
 
         return redirect()
-            ->route('manage-proposal.activity-reports.index')
+            ->route('proposal.activity-reports.index')
             ->with('success', 'Activity report deleted successfully.');
     }
 
@@ -506,7 +506,7 @@ class ActivityReportController extends Controller
         ]);
 
         return redirect()
-            ->route('manage-proposal.activity-reports.index')
+            ->route('proposal.activity-reports.index')
             ->with('success', 'Activity report submitted successfully.');
     }
 
@@ -562,7 +562,7 @@ class ActivityReportController extends Controller
         }
 
         return redirect()
-            ->route('manage-proposal.activity-reports.index')
+            ->route('proposal.activity-reports.index')
             ->with('success', 'Activity report approved successfully.');
     }
 
@@ -618,7 +618,7 @@ class ActivityReportController extends Controller
         }
 
         return redirect()
-            ->route('manage-proposal.activity-reports.index')
+            ->route('proposal.activity-reports.index')
             ->with('success', 'Activity report rejected successfully.');
     }
 
@@ -672,7 +672,7 @@ class ActivityReportController extends Controller
             ->appends($request->query());
 
         return view(
-            'manage-proposal.activity-reports.history',
+            'proposal.activity-reports.history',
             compact('activityReports')
         );
     }

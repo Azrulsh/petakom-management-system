@@ -99,7 +99,7 @@ Route::middleware(['auth'])->group(function () {
     */
 
     Route::middleware(['role:committee,lecturer,coordinator'])
-        ->name('manage-proposal.')
+        ->name('proposal.')
         ->group(function () {
 
             // Activity Report Approval History
@@ -158,7 +158,7 @@ Route::middleware(['auth'])->group(function () {
     // ===================
 
     Route::middleware(['auth', 'role:student'])
-        ->name('manage-proposal.')
+        ->name('proposal.')
         ->group(function () {
 
             // Activity Proposal Management
@@ -178,7 +178,7 @@ Route::middleware(['auth'])->group(function () {
     // ==========================================
 
     Route::middleware(['auth'])
-        ->name('manage-proposal.')
+        ->name('proposal.')
         ->group(function () {
 
             Route::get('/proposal-reports', [

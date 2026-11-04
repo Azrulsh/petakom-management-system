@@ -15,14 +15,6 @@
             </p>
         </div>
 
-        <a href="{{ route('proposal-approvals.index') }}"
-           class="btn btn-outline-secondary">
-
-            <i class="fas fa-arrow-left"></i>
-            Pending Proposals
-
-        </a>
-
     </div>
 
 
@@ -34,7 +26,7 @@
         <a class="nav-link active"
            href="{{ route('proposal-approvals.history.index') }}">
 
-            <i class="fas fa-file-alt mr-1"></i>
+            <i class="fas fa-file-alt"></i>
             Proposal History
 
         </a>
@@ -42,9 +34,9 @@
 
     <li class="nav-item">
         <a class="nav-link"
-           href="{{ route('manage-proposal.activity-reports.history') }}">
+           href="{{ route('proposal.activity-reports.history') }}">
 
-            <i class="fas fa-clipboard-check mr-1"></i>
+            <i class="fas fa-clipboard-check"></i>
             Activity Report History
 
         </a>

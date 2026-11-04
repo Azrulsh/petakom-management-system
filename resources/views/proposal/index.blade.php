@@ -18,7 +18,7 @@
             </p>
         </div>
 
-        <a href="{{ route('manage-proposal.proposals.create') }}"
+        <a href="{{ route('proposal.proposals.create') }}"
            class="btn btn-danger">
             + Create Proposal
         </a>
@@ -27,15 +27,14 @@
 
 
     {{-- Notifications --}}
-
     @if(session('success'))
-        <div class="alert alert-success alert-dismissible fade show">
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
             {{ session('success') }}
 
             <button type="button"
-                    class="close"
-                    data-dismiss="alert">
-                &times;
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close">
             </button>
         </div>
     @endif
@@ -45,9 +44,9 @@
             {{ session('error') }}
 
             <button type="button"
-                    class="close"
-                    data-dismiss="alert">
-                &times;
+                    class="btn-close"
+                    data-bs-dismiss="alert"
+                    aria-label="Close">
             </button>
         </div>
     @endif
@@ -60,7 +59,7 @@
         <div class="card-body">
 
             <form method="GET"
-                  action="{{ route('manage-proposal.proposals.index') }}">
+                  action="{{ route('proposal.proposals.index') }}">
 
                 <div class="row">
 
@@ -81,7 +80,7 @@
 
                         <label>Category</label>
 
-                        <select name="category" class="form-control">
+                        <select name="category" class="form-select">
 
                             <option value="">All Categories</option>
 
@@ -113,7 +112,7 @@
 
                         <label>Status</label>
 
-                        <select name="status" class="form-control">
+                        <select name="status" class="form-select">
 
                             <option value="">All Status</option>
 
@@ -145,11 +144,11 @@
                     <div class="col-md-2 mb-2 d-flex align-items-end">
 
                         <button type="submit"
-                                class="btn btn-danger mr-2">
+                                class="btn btn-danger me-2">
                             Filter
                         </button>
 
-                        <a href="{{ route('manage-proposal.proposals.index') }}"
+                        <a href="{{ route('proposal.proposals.index') }}"
                            class="btn btn-secondary">
                             Reset
                         </a>
@@ -232,25 +231,25 @@
 
                                     @if($proposal->status === 'approved')
 
-                                        <span class="badge badge-success">
+                                        <span class="badge bg-success">
                                             Approved
                                         </span>
 
                                     @elseif($proposal->status === 'pending')
 
-                                        <span class="badge badge-warning">
+                                        <span class="badge bg-warning">
                                             Pending
                                         </span>
 
                                     @elseif($proposal->status === 'rejected')
 
-                                        <span class="badge badge-danger">
+                                        <span class="badge bg-danger">
                                             Rejected
                                         </span>
 
                                     @else
 
-                                        <span class="badge badge-secondary">
+                                        <span class="badge bg-secondary">
                                             Draft
                                         </span>
 
@@ -260,7 +259,7 @@
 
                                 <td>
 
-                                    <a href="{{ route('manage-proposal.proposals.show', $proposal->id) }}"
+                                    <a href="{{ route('proposal.proposals.show', $proposal->id) }}"
                                        class="btn btn-sm btn-info">
                                         View
                                     </a>
@@ -272,7 +271,7 @@
                                             in_array($proposal->status, ['draft', 'rejected'], true)
                                         )
                                     )
-                                        <a href="{{ route('manage-proposal.proposals.edit', $proposal->id) }}"
+                                        <a href="{{ route('proposal.proposals.edit', $proposal->id) }}"
                                            class="btn btn-sm btn-warning">
                                             Edit
                                         </a>
@@ -286,7 +285,7 @@
                                         && in_array($proposal->status, ['draft', 'rejected'], true)
                                     )
 
-                                        <form action="{{ route('manage-proposal.proposals.submit', $proposal->id) }}"
+                                        <form action="{{ route('proposal.proposals.submit', $proposal->id) }}"
                                               method="POST"
                                               class="d-inline"
                                               onsubmit="return confirm('Submit this proposal for approval?')">
@@ -310,7 +309,7 @@
                                         )
                                     )
 
-                                        <form action="{{ route('manage-proposal.proposals.destroy', $proposal->id) }}"
+                                        <form action="{{ route('proposal.proposals.destroy', $proposal->id) }}"
                                             method="POST"
                                             class="d-inline"
                                             onsubmit="return confirm('Are you sure you want to delete this proposal?')">

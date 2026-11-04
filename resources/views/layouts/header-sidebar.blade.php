@@ -120,7 +120,7 @@
                                 auth()->user()->isStudent()))
 
                                 <li>
-                                    <a href="{{ route('manage-proposal.proposals.index') }}">
+                                    <a href="{{ route('proposal.proposals.index') }}">
                                         <i class="fas fa-file-alt"></i>
                                         Activity Proposal
                                     </a>
@@ -139,7 +139,7 @@
                                 auth()->user()->isCoordinator()))
 
                                 <li>
-                                    <a href="{{ route('manage-proposal.activity-reports.index') }}">
+                                    <a href="{{ route('proposal.activity-reports.index') }}">
                                         <i class="fas fa-clipboard-list"></i>
                                         Activity Reports
                                     </a>
@@ -151,7 +151,7 @@
                             {{-- GENERATE REPORTS --}}
 
                             <li>
-                                <a href="{{ route('manage-proposal.reports.index') }}">
+                                <a href="{{ route('proposal.reports.index') }}">
                                     <i class="fas fa-chart-bar"></i>
                                     Generate Reports
                                 </a>

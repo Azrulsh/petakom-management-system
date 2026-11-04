@@ -52,7 +52,7 @@
             </p>
         </div>
 
-        <a href="{{ route('manage-proposal.activity-reports.index') }}"
+        <a href="{{ route('proposal.activity-reports.index') }}"
            class="btn btn-secondary">
             Back
         </a>
@@ -91,7 +91,7 @@
                 {{ $activityReport->activity_title }}
             </h5>
 
-            <span class="badge badge-{{ $statusClass }} p-2">
+            <span class="badge bg-{{ $statusClass }} p-2">
                 {{ ucfirst($activityReport->status) }}
             </span>
 
@@ -193,7 +193,7 @@
 
                 @if($canEditReport)
 
-                    <a href="{{ route('manage-proposal.activity-reports.edit', $activityReport->id) }}"
+                    <a href="{{ route('proposal.activity-reports.edit', $activityReport->id) }}"
                        class="btn btn-warning">
                         Edit Report
                     </a>
@@ -202,7 +202,7 @@
 
                 @if($canSubmitReport)
 
-                    <form action="{{ route('manage-proposal.activity-reports.submit', $activityReport->id) }}"
+                    <form action="{{ route('proposal.activity-reports.submit', $activityReport->id) }}"
                           method="POST"
                           class="d-inline"
                           onsubmit="return confirm('Submit this report for approval?')">
@@ -244,7 +244,7 @@
                     </div>
 
                     {{-- APPROVE FORM --}}
-                    <form action="{{ route('manage-proposal.activity-reports.approve', $activityReport->id) }}"
+                    <form action="{{ route('proposal.activity-reports.approve', $activityReport->id) }}"
                           method="POST"
                           class="mb-4">
 
@@ -274,7 +274,7 @@
                     <hr>
 
                     {{-- REJECT FORM --}}
-                    <form action="{{ route('manage-proposal.activity-reports.reject', $activityReport->id) }}"
+                    <form action="{{ route('proposal.activity-reports.reject', $activityReport->id) }}"
                           method="POST">
 
                         @csrf

@@ -15,17 +15,9 @@
             </p>
         </div>
 
-        <span class="badge bg-warning text-dark p-2">
-            Pending Review
-        </span>
+       
 
-        <a href="{{ route('proposal-approvals.history.index') }}"
-        class="btn btn-outline-danger">
-
-            <i class="fas fa-history"></i>
-            Approval History
-
-        </a>
+        
 
     </div>
 
