@@ -1,66 +1,267 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# PETAKOM Management System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A web-based management system developed using Laravel to streamline administrative operations, student engagement, and committee management for PETAKOM (Persatuan Teknologi Komputer), Universiti Malaysia Pahang Al-Sultan Abdullah (UMPSA).
 
-## About Laravel
+The system provides a centralized platform for managing activities, registrations, committee elections, appointments, and announcements with role-based access control.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Features
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### 1. Dashboard
+- Provides a centralized interface for users to access system modules.
+- Displays relevant information based on user roles.
+- Offers navigation to administrative and student functionalities.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+### 2. Activity Management
+- Create, view, update, and delete activities through an interactive calendar.
+- Integrated FullCalendar for calendar visualization.
+- Supports all-day and date-based activities.
+- Allows authorized users to manage organizational activities.
+- Enables students to create and manage personal reminders.
+- Restricts access to personal reminders based on ownership.
 
-## Learning Laravel
+### 3. Committee Election Management
+- Allows administrators and coordinators to create and manage committee election sessions.
+- Configures election details, academic sessions, and nomination periods.
+- Supports election statuses such as Draft, Open, and Closed.
+- Enables students to register as candidates during active nomination periods.
+- Allows authorized users to review, approve, or decline candidate applications.
+- Prevents duplicate candidate registrations for the same election.
+- Supports committee appointments from approved candidates after an election closes.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+**Note:** The election module focuses on candidate nomination, approval, and appointment management. Online student voting is not implemented.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 4. Registration Management
+- Provides dedicated registration modules for students, lecturers, and committee members.
+- Organizes registration records through role-specific interfaces.
+- Supports committee registration through the approved candidate and appointment process.
+- Restricts administrative registration management to authorized users.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 5. Bulletin Management
+- Provides a centralized module for PETAKOM announcements and information.
+- Supports bulletin content and file attachments.
+- Stores uploaded files using Laravel's filesystem.
 
-## Laravel Sponsors
+### 6. Role-Based Access Control
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+The system provides three primary user roles:
 
-### Premium Partners
+| Role | Access |
+|---|---|
+| Admin | Full access to system management and administrative operations. |
+| Coordinator | Delegated access to authorized management functions. |
+| Student | Access to student functionalities, candidate registration, activities, and personal reminders. |
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+Role-based authorization ensures users can only access functions and records permitted by their assigned roles.
 
-## Contributing
+## Technology Stack
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+| Category | Technology |
+|---|---|
+| Backend | PHP, Laravel |
+| Frontend | HTML, CSS, JavaScript, Blade |
+| Database | MySQL |
+| Calendar | FullCalendar.js |
+| Dependency Management | Composer, npm |
+| Version Control | Git |
+| Development Environment | Laravel Development Server |
 
-## Code of Conduct
+## Installation Guide
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Prerequisites
 
-## Security Vulnerabilities
+Ensure the following software is installed:
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+- PHP (compatible with the project's Laravel version)
+- Composer
+- Node.js and npm
+- MySQL
+- Git
+
+### 1. Clone the Repository
+
+```bash
+git clone <repository-url>
+cd <project-directory>
+```
+
+### 2. Install Dependencies
+
+Install PHP dependencies:
+
+```bash
+composer install
+```
+
+Install JavaScript dependencies:
+
+```bash
+npm install
+```
+
+### 3. Configure Environment
+
+Create an environment configuration file:
+
+```bash
+cp .env.example .env
+```
+
+Update the database settings inside `.env`:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=petakom_management
+DB_USERNAME=root
+DB_PASSWORD=
+```
+
+Create the corresponding MySQL database before running migrations.
+
+### 4. Generate Application Key
+
+```bash
+php artisan key:generate
+```
+
+### 5. Run Database Migrations
+
+```bash
+php artisan migrate
+```
+
+If the project includes database seeders, run:
+
+```bash
+php artisan db:seed
+```
+
+### 6. Create Storage Symbolic Link
+
+```bash
+php artisan storage:link
+```
+
+This enables public access to uploaded files stored within Laravel's public storage disk.
+
+### 7. Start the Application
+
+Start the Laravel development server:
+
+```bash
+php artisan serve
+```
+
+In another terminal, start the frontend development server:
+
+```bash
+npm run dev
+```
+
+Access the application at:
+
+```text
+http://127.0.0.1:8000
+```
+
+## Committee Election Workflow
+
+The committee election process follows these stages:
+
+**1. Election Creation**
+
+An Admin or Coordinator creates an election session, including its title, academic session, nomination period, and relevant details.
+
+**2. Election Opening**
+
+The election is opened to allow eligible students to register as candidates during the nomination period.
+
+**3. Candidate Registration**
+
+Students submit their candidate registrations. Duplicate registrations for the same election are prevented.
+
+**4. Candidate Review**
+
+An Admin or Coordinator reviews submitted applications and approves or declines each candidate.
+
+**5. Election Closure**
+
+The election is closed after the nomination and review process is completed.
+
+**6. Committee Appointment**
+
+Authorized users appoint approved candidates as official committee members. Appointment details are recorded separately from candidate application status.
+
+## Security and Access Control
+
+The system incorporates authorization and validation mechanisms, including:
+
+- Role-based access restrictions for administrative functions.
+- Ownership validation for personal student reminders.
+- Nomination period validation for candidate registration.
+- Prevention of duplicate candidate applications.
+- Candidate approval before committee appointment.
+- Server-side request validation for supported operations.
+
+## Project Structure
+
+The application follows Laravel's Model-View-Controller (MVC) architecture.
+
+```text
+app/
+├── Http/
+│   └── Controllers/
+├── Models/
+
+database/
+├── migrations/
+└── seeders/
+
+resources/
+├── css/
+├── js/
+└── views/
+    ├── activity/
+    ├── election/
+    ├── registration/
+    └── bulletin/
+
+routes/
+└── web.php
+
+public/
+storage/
+```
+
+*The directory structure above illustrates the main Laravel components and feature modules. Actual folder names may vary.*
+
+## Future Enhancements
+
+Potential enhancements include:
+
+- Email notifications for candidate application decisions.
+- Improved dashboard analytics and reporting.
+- Additional activity participation tracking.
+- Export functionality for administrative records.
+- Enhanced bulletin categorization and search.
+
+## Project Status
+
+**Completed – Initial Release**
+
+Core modules have been developed and functionally tested, including activity management, committee election and appointment management, registration, bulletin functionality, and role-based access control.
+
+Further improvements may be introduced in future releases.
+
+## Developer
+
+**Muhammad Azrul Shafiq Bin Nadzri**
+
+Bachelor of Computer Science (Software Engineering) with Honours
+
+Universiti Malaysia Pahang Al-Sultan Abdullah (UMPSA)
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project was developed for educational and portfolio purposes. No open-source license has been specified.
