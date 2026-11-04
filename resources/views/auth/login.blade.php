@@ -1,4 +1,3 @@
-
 <x-guest-layout>
     <div class="min-h-screen lg:grid lg:grid-cols-2"
          style="background-color: #fff1f2;">
@@ -92,21 +91,21 @@
                 <!-- Form Heading -->
                 <div class="mb-9">
                     <p class="mb-3 text-sm font-semibold uppercase tracking-widest"
-                       style="color: #b91c1c;">
+                       style="color: #7f1d1d;">
                         Welcome back
                     </p>
 
-                    <h2 class="text-3xl font-bold tracking-tight text-slate-900">
+                    <h2 class="text-3xl font-bold tracking-tight " style="color: #7f1d1d;">
                         Sign in to your account
                     </h2>
 
-                    <p class="mt-3 text-sm leading-relaxed text-slate-600">
+                    <p class="mt-3 text-sm leading-relaxed" style="color: #7f1d1d;">
                         Enter your credentials to access the PETAKOM Management System.
                     </p>
                 </div>
 
                 <!-- Validation Errors -->
-                <x-jet-validation-errors class="mb-5" />
+                <x-validation-errors class="mb-5" />
 
                 @if (session('status'))
                     <div class="mb-5 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700">
