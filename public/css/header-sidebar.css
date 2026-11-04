@@ -1,0 +1,277 @@
+/*
+   PETAKOM — CSS DIGABUNG DARIPADA style.css, nav.css, body.css
+   CSS asal dikekalkan dalam susunan style -> nav -> body.
+   Dua @import dipindahkan ke atas supaya sah dalam fail CSS gabungan.
+   Penambahan terakhir hanya untuk profile + username di bawah gambar.
+*/
+@import url('https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css?family=PT+Sans');
+
+/* ===== STYLE.CSS — HEADER / HOMEPAGE / FOOTER (ASAL) ===== */
+.title {
+   font-weight: bold;
+   font-size: 50px;
+   color: rgb(206, 3, 12);
+   background: white;
+ }
+ 
+.logo {
+   width: 120px;
+   margin-left: 30px;
+ }
+ 
+ .home-container {
+ width: auto;
+ min-height: 90%;
+ background-color: lightgray;
+ padding: 40px;;
+ display: flex;
+ padding: 20px;
+ justify-content: space-evenly;
+ align-items: center;
+ height: 100%;
+ 
+ /* padding-bottom: */
+   }
+  
+.calendar{
+   color: yellow;
+   background-color: rgb(206, 3, 12);
+   font-weight: normal;
+   font-size: 18px;
+   border-radius: 12px;
+   padding: 10px;
+ }
+ 
+.homepage{
+   color: yellow;
+   background-color: rgb(206, 3, 12);
+   font-weight: bolder;
+   font-size: 20px;
+   border-radius: 12px;
+   padding: 15px;
+ }
+ 
+.home-container .calendar{
+   color: yellow;
+   background-color: rgb(206, 3, 12);
+   font-weight: bolder;
+   font-size: 20px;
+   border-radius: 12px;
+   padding: 24px;
+ }
+ 
+.footer{
+   position: fixed;
+   left: 0px;
+   bottom: 0px;
+   width: 100%;
+   text-align: end;
+   background: white;
+ }
+
+.mark.red{
+   color: red;
+   background: lightgray;
+ }
+ 
+ 
+.top{
+   font-size: 18px;
+   margin-left: 25px;
+ }
+  
+.center{
+   font-size: 35px;
+   position: absolute;
+   justify-content: center;
+   background: white;
+   margin-left: 30%;
+   margin-top: 20px;
+ }
+
+/* ===== NAV.CSS — SIDEBAR / NAVIGATION (ASAL) ===== */
+/* navigation bar css */
+
+
+*{
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+   list-style: none;
+   text-decoration: none;
+   font-family: 'Josefin Sans', sans-serif;
+ }
+
+.wrapper{
+  display: flex;
+  position: relative;
+}
+
+.wrapper .sidebar{
+  width: 300px;
+  min-height: 100%;
+  background: rgb(206, 3, 12);
+  padding: 30px 0px;
+  position: sticky;
+ }
+
+.wrapper .sidebar ul li{
+  padding: 15px;
+  border-bottom: 1px solid rgb(119, 0, 6);
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  border-top: 1px solid rgba(255,255,255,0.05);
+ }    
+
+.wrapper .sidebar ul li a{
+  color: #ffffff;
+  display: block;
+ }
+
+.wrapper .sidebar ul li:hover{
+  background-color: rgb(119, 0, 6);;
+ }
+    
+.wrapper .sidebar ul li:hover a{
+  color: #fff;
+ }
+ 
+.wrapper .main_content{
+  width: 100%;
+  background:lightgrey;
+  margin-left: 200px;
+ }
+
+.wrapper .top{
+  margin-right: 250px
+ }
+
+ /* Remove underline from sidebar navigation */
+.wrapper .sidebar ul li a,
+.wrapper .sidebar ul li a:link,
+.wrapper .sidebar ul li a:visited,
+.wrapper .sidebar ul li a:hover,
+.wrapper .sidebar ul li a:focus,
+.wrapper .sidebar ul li a:active {
+    text-decoration: none !important;
+}
+
+/* ===== BODY.CSS — BODY / PROFILE / CONTENT (ASAL) ===== */
+.bodies{
+  background: #fff;
+  font-family: 'PT Sans', sans-serif;
+  margin-right: 0px;
+  height: 0px;
+}
+
+.panel-primary{
+    float: left;
+
+    /* margin-bottom: 10%; */
+}
+
+.container{
+    padding: 0.6rem 1.2rem;
+    background: #ffffff;
+    border: 20px solid #e1e1e1;
+    margin-left: 40px;
+    margin-top: 5px;
+    padding: 10px 300px;
+  }
+ 
+.panel-header{
+  background-color: white;
+}
+
+.profile {
+  display: inline;
+  float: right;
+  margin-left: 20px;
+  margin-right: 40px;
+  margin-top: 10px;
+  height: 90px;
+  width: 90px;
+}
+
+.person {
+  font-weight: lighter;
+  font-size: 30px;
+  color: black;
+}
+
+.footers{
+   text-align: end;
+   margin-right: 50px;
+}
+
+body {
+            font-family: 'Nunito', sans-serif;
+            margin: 0;
+        }
+
+        .registration-content {
+            flex: 1;
+            min-width: 0;
+            padding: 25px;
+        }
+
+        .wrapper {
+            display: flex;
+            min-height: calc(100vh - 100px);
+        }
+
+        .registration-content .card {
+            border-radius: 10px;
+        }
+
+        .registration-content .form-control,
+        .registration-content .form-select {
+            min-height: 42px;
+        }
+
+        .registration-content .table th {
+            white-space: nowrap;
+        }
+
+        .registration-content .table td {
+            vertical-align: middle;
+        }
+
+        @media (max-width: 768px) {
+            .wrapper {
+                display: block;
+            }
+
+            .registration-content {
+                padding: 15px;
+            }
+        }
+
+/* ===== TAMBAHAN SAHAJA: PROFILE + USERNAME DI BAWAH GAMBAR ===== */
+/* Jangan ubah .title, .logo, sidebar, atau footer asal. */
+.title .profile-container {
+    float: right;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 20px;
+    margin-right: 40px;
+    margin-top: 10px;
+}
+
+.title .profile-container .profile {
+    display: block;
+    float: none;
+    margin: 0;
+    width: 70px;
+    height: 70px;
+}
+
+.title .profile-container .person {
+    display: block;
+    font-size: 20px;
+    line-height: 2.0;
+    text-align: center;
+    font-weight: lighter;
+    color: black;
+}

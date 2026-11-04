@@ -8,6 +8,8 @@
 
     {{-- Page Heading --}}
     <div class="d-flex justify-content-between align-items-center mb-4">
+
+        {{-- Page Title --}}
         <div>
             <h3 class="fw-bold mb-1">Election Candidates</h3>
             <p class="text-muted mb-0">
@@ -30,18 +32,24 @@
                     ->exists();
         @endphp
 
-        @if($canRegister)
-            <a href="{{ route('manage-election.candidates.create', $election->id) }}"
-            class="btn btn-primary">
-                <i class="fas fa-user-plus me-1"></i>
-                Register as Candidate
-            </a>
-        @endif
+        {{-- Action Buttons --}}
+        <div class="d-flex align-items-center gap-2">
 
-        <a href="{{ route('manage-election.show', $election->id) }}"
-           class="btn btn-secondary">
-            Back
-        </a>
+            @if($canRegister)
+                <a href="{{ route('election.candidates.create', $election->id) }}"
+                class="btn btn-primary">
+                    <i class="fas fa-user-plus me-1"></i>
+                    Register as Candidate
+                </a>
+            @endif
+
+            <a href="{{ route('election.show', $election->id) }}"
+            class="btn btn-secondary">
+                Back
+            </a>
+
+        </div>
+
     </div>
 
     {{-- Success Message --}}
@@ -141,7 +149,7 @@
 
                                                     {{-- Approve --}}
                                                     <form method="POST"
-                                                        action="{{ route('manage-election.candidates.review', [
+                                                        action="{{ route('election.candidates.review', [
                                                             $election->id,
                                                             $candidate->id
                                                         ]) }}">
@@ -160,7 +168,7 @@
 
                                                     {{-- Reject --}}
                                                     <form method="POST"
-                                                        action="{{ route('manage-election.candidates.review', [
+                                                        action="{{ route('election.candidates.review', [
                                                             $election->id,
                                                             $candidate->id
                                                         ]) }}">
@@ -198,7 +206,7 @@
 
                                                 @elseif(auth()->user()->isAdmin() && $election->status === 'closed')
                                                     <form method="POST"
-                                                        action="{{ route('manage-election.candidates.appoint', [
+                                                        action="{{ route('election.candidates.appoint', [
                                                             $election->id,
                                                             $candidate->id
                                                         ]) }}">
@@ -233,7 +241,7 @@
                                             )
                                         )
                                             <form method="POST"
-                                                action="{{ route('manage-election.candidates.withdraw', [
+                                                action="{{ route('election.candidates.withdraw', [
                                                     $election->id,
                                                     $candidate->id
                                                 ]) }}">

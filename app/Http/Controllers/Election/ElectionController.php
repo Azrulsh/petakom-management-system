@@ -26,7 +26,7 @@ class ElectionController extends Controller
             ->latest()
             ->paginate(10);
 
-        return view('manage-election.elections.index', compact('elections'));
+        return view('election.elections.index', compact('elections'));
     }
 
     public function create()
@@ -40,7 +40,7 @@ class ElectionController extends Controller
             'Unauthorized access.'
         );
 
-        return view('manage-election.elections.create');
+        return view('election.elections.create');
     }
   
     public function store(Request $request)
@@ -78,7 +78,7 @@ class ElectionController extends Controller
         ]);
 
         return redirect()
-            ->route('manage-election.index')
+            ->route('election.index')
             ->with('success', 'Election created successfully.');
     }
 
@@ -98,7 +98,7 @@ class ElectionController extends Controller
 
         $election->load('creator');
 
-        return view('manage-election.elections.show', compact('election'));
+        return view('election.elections.show', compact('election'));
     }
 
     public function edit(Election $election)
@@ -119,7 +119,7 @@ class ElectionController extends Controller
             'Only draft elections can be edited.'
         );
 
-        return view('manage-election.elections.edit', compact('election'));
+        return view('election.elections.edit', compact('election'));
     }
 
     
@@ -161,7 +161,7 @@ class ElectionController extends Controller
         $election->update($validated);
 
         return redirect()
-            ->route('manage-election.index')
+            ->route('election.index')
             ->with('success', 'Election updated successfully.');
     }
 
@@ -187,7 +187,7 @@ class ElectionController extends Controller
         $election->delete();
 
         return redirect()
-            ->route('manage-election.index')
+            ->route('election.index')
             ->with('success', 'Election deleted successfully.');
     }
 
@@ -224,7 +224,7 @@ class ElectionController extends Controller
         ]);
 
         return redirect()
-            ->route('manage-election.index')
+            ->route('election.index')
             ->with('success', 'Election status updated successfully.');
     }
 

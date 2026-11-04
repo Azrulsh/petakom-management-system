@@ -243,7 +243,7 @@ Route::middleware(['auth'])->group(function () {
     // All authenticated users
     Route::middleware(['auth'])
         ->prefix('committee-election')
-        ->name('manage-election.')
+        ->name('election.')
         ->group(function () {
 
             // Election List

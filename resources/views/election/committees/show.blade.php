@@ -14,7 +14,7 @@
             </p>
         </div>
 
-        <a href="{{ route('manage-election.committees.index') }}"
+        <a href="{{ route('election.committees.index') }}"
            class="btn btn-secondary">
             Back to Committee
         </a>
@@ -111,12 +111,12 @@
 
             <div class="d-flex gap-2">
 
-                <a href="{{ route('manage-election.committees.edit', $committee->id) }}"
+                <a href="{{ route('election.committees.edit', $committee->id) }}"
                    class="btn btn-warning">
                     Edit Member
                 </a>
 
-                <form action="{{ route('manage-election.committees.destroy', $committee->id) }}"
+                <form action="{{ route('election.committees.destroy', $committee->id) }}"
                       method="POST"
                       onsubmit="return confirm('Delete this committee record?')">
 

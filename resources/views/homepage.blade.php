@@ -594,7 +594,7 @@
                     $isCommittee ||
                     $isCoordinator;
 
-                $canSeeElection = $isAdmin || $isCommittee;
+               $canSeeElection = auth()->check();
 
                 // Bulletin is available to all PETAKOM users.
                 $canSeeBulletin =
@@ -745,7 +745,12 @@
                                 <i class="fas fa-users-cog"></i>
                             </div>
 
-                            <h3>Manage Committee Election</h3>
+                            <h3>
+                                {{ $isAdmin || auth()->user()->isCoordinator()
+                                    ? 'Manage Committee Election'
+                                    : 'Committee Election'
+                                }}
+                            </h3>
 
                             <p>
                                 Manage PETAKOM committee elections
@@ -762,14 +767,14 @@
 
                             {{-- Committee Registration - Admin Only --}}
                             @if(auth()->user()->isAdmin())
-                                <a href="{{ route('manage-election.committees.index') }}">
+                                <a href="{{ route('election.committees.index') }}">
                                     <i class="fas fa-users"></i>
                                     Committee Registration
                                 </a>
                             @endif
 
                             {{-- Committee Election --}}
-                            <a href="{{ route('manage-election.index') }}">
+                            <a href="{{ route('election.index') }}">
                                 <i class="fas fa-vote-yea"></i>
                                 Committee Election
                             </a>

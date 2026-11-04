@@ -11,10 +11,8 @@
     <!-- Fonts -->
     <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 
-    <!-- CSS -->
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/nav.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/body.css') }}" rel="stylesheet">
+    {{-- CSS --}}
+    <link href="{{ asset('css/header-sidebar.css') }}" rel="stylesheet">
 
     <!-- Bootstrap 5 -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -25,23 +23,23 @@
 <body class="bodies">
 
     <!-- Header -->
-    <header class="title">
+<header class="title">
 
-        <img class="logo"
-             src="/images/petakom-logo.png"
-             alt="PETAKOM Logo">
+    <img class="logo" src="/images/petakom-logo.png" alt="PETAKOM Logo">
 
-        PETAKOM MANAGEMENT SYSTEM
+    PETAKOM MANAGEMENT SYSTEM
 
-        <img class="profile"
-             src="/images/profile.png"
-             alt="Profile">
+    <div class="profile-container">
+
+        <img class="profile" src="/images/profile.png" alt="Profile">
 
         <span class="person">
             {{ auth()->user()->name ?? 'Users' }}
         </span>
 
-    </header>
+    </div>
+
+</header>
 
     <!-- Navigation and Content -->
     <div class="wrapper">
@@ -198,7 +196,7 @@
                     <ul class="submenu">
 
                         <li>
-                            <a href="{{ route('manage-election.index') }}">
+                            <a href="{{ route('election.index') }}">
                                 Committee Election
                             </a>
                         </li>

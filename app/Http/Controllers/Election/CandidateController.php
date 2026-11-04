@@ -48,7 +48,7 @@ class CandidateController extends Controller
             ->latest()
             ->paginate(10);
 
-        return view('manage-election.candidates.index', compact(
+        return view('election.candidates.index', compact(
             'election',
             'candidates'
         ));
@@ -103,7 +103,7 @@ class CandidateController extends Controller
             'You have already registered for this election.'
         );
 
-        return view('manage-election.candidates.create', compact(
+        return view('election.candidates.create', compact(
             'election',
             'student'
         ));
@@ -172,7 +172,7 @@ class CandidateController extends Controller
         });
 
         return redirect()
-            ->route('manage-election.candidates.index', $election->id)
+            ->route('election.candidates.index', $election->id)
             ->with('success', 'Candidate registration submitted successfully.');
     }
   
@@ -215,7 +215,7 @@ class CandidateController extends Controller
         ]);
 
         return redirect()
-            ->route('manage-election.candidates.index', $election->id)
+            ->route('election.candidates.index', $election->id)
             ->with('success', 'Candidate application reviewed successfully.');
     }
 
@@ -266,7 +266,7 @@ class CandidateController extends Controller
         ]);
 
         return redirect()
-            ->route('manage-election.candidates.index', $election->id)
+            ->route('election.candidates.index', $election->id)
             ->with('success', 'Your candidacy has been withdrawn successfully.');
     }
 
@@ -318,7 +318,7 @@ class CandidateController extends Controller
         ]);
 
         return redirect()
-            ->route('manage-election.candidates.index', $election->id)
+            ->route('election.candidates.index', $election->id)
             ->with('success', 'Candidate appointed as committee successfully.');
     }
 

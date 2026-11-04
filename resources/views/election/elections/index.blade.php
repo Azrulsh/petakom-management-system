@@ -18,7 +18,7 @@
     
     @if(auth()->user()->isAdmin() || auth()->user()->isCoordinator())
 
-        <a href="{{ route('manage-election.create') }}"
+        <a href="{{ route('election.create') }}"
         class="btn btn-primary">
 
             <i class="fas fa-plus me-1"></i>
@@ -127,7 +127,7 @@
                                 </td>
                           
                                 <td>
-                                    <a href="{{ route('manage-election.show', $election->id) }}"
+                                    <a href="{{ route('election.show', $election->id) }}"
                                     class="btn btn-sm btn-info text-white">
 
                                         <i class="fas fa-eye me-1"></i>
@@ -139,7 +139,7 @@
                                         (auth()->user()->isAdmin() || auth()->user()->isCoordinator())
                                         && $election->status === 'draft'
                                     )
-                                        <a href="{{ route('manage-election.edit', $election->id) }}"
+                                        <a href="{{ route('election.edit', $election->id) }}"
                                         class="btn btn-sm btn-warning">
                                             <i class="fas fa-edit me-1"></i>
                                             Edit
@@ -148,7 +148,7 @@
 
                                     @if(auth()->user()->isAdmin() && $election->status === 'draft')
 
-                                        <form action="{{ route('manage-election.destroy', $election->id) }}"
+                                        <form action="{{ route('election.destroy', $election->id) }}"
                                             method="POST"
                                             class="d-inline"
                                             onsubmit="return confirm('Are you sure you want to delete this election?');">
@@ -168,7 +168,7 @@
                                     @if(auth()->user()->isAdmin() || auth()->user()->isCoordinator())
 
                                         @if($election->status === 'draft')
-                                            <form action="{{ route('manage-election.update-status', $election->id) }}"
+                                            <form action="{{ route('election.update-status', $election->id) }}"
                                                 method="POST" class="d-inline"
                                                 onsubmit="return confirm('Publish this election?');">
                                                 @csrf
@@ -182,7 +182,7 @@
                                                 </button>
                                             </form>
                                         @elseif($election->status === 'open')
-                                            <form action="{{ route('manage-election.update-status', $election->id) }}"
+                                            <form action="{{ route('election.update-status', $election->id) }}"
                                                 method="POST" class="d-inline"
                                                 onsubmit="return confirm('Close this election?');">
                                                 @csrf

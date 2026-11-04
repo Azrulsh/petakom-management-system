@@ -6,10 +6,10 @@
 
     <div class="mb-4">
 
-        <h3 class="fw-bold">Edit Committee Member</h3>
+        <h3 class="fw-bold">Add Committee Member</h3>
 
         <p class="text-muted">
-            Update PETAKOM committee membership information.
+            Register a student as a PETAKOM committee member.
         </p>
 
     </div>
@@ -18,7 +18,9 @@
 
         <div class="alert alert-danger">
 
-            <ul class="mb-0">
+            <strong>Please correct the following errors:</strong>
+
+            <ul class="mb-0 mt-2">
 
                 @foreach($errors->all() as $error)
                     <li>{{ $error }}</li>
@@ -34,8 +36,8 @@
 
         <div class="card-body p-4">
 
-            @include('manage-election.committees.form', [
-                'committee' => $committee,
+            @include('election.committees.form', [
+                'committee' => null,
                 'students' => $students
             ])
 

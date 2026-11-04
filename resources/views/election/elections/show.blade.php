@@ -8,6 +8,8 @@
 
     {{-- Page Heading --}}
     <div class="d-flex justify-content-between align-items-center mb-4">
+
+        {{-- Page Title --}}
         <div>
             <h3 class="fw-bold mb-1">Election Details</h3>
             <p class="text-muted mb-0">
@@ -15,16 +17,22 @@
             </p>
         </div>
 
-        <a href="{{ route('manage-election.candidates.index', $election->id) }}"
+        {{-- Action Buttons --}}
+        <div class="d-flex align-items-center gap-2">
+
+            <a href="{{ route('election.candidates.index', $election->id) }}"
             class="btn btn-primary">
                 <i class="fas fa-users me-1"></i>
                 View Candidates
-        </a>
-        
-        <a href="{{ route('manage-election.index') }}"
-           class="btn btn-secondary">
-            Back
-        </a>
+            </a>
+
+            <a href="{{ route('election.index') }}"
+            class="btn btn-secondary">
+                Back
+            </a>
+
+        </div>
+
     </div>
 
     {{-- Election Information --}}

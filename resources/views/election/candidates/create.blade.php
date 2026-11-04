@@ -25,7 +25,7 @@
                 </div>
             @endif
             
-            <form method="POST" action="{{ route('manage-election.candidates.store', $election->id) }}">
+            <form method="POST" action="{{ route('election.candidates.store', $election->id) }}">
                 @csrf
 
                 <div class="row g-3">
@@ -75,7 +75,7 @@
                 </div>
 
                 <div class="d-flex justify-content-end gap-2 mt-4">
-                    <a href="{{ route('manage-election.candidates.index', $election->id) }}"
+                    <a href="{{ route('election.candidates.index', $election->id) }}"
                        class="btn btn-secondary">
                         Cancel
                     </a>
