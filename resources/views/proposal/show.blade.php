@@ -110,7 +110,6 @@
         </div>
     </div>
 
-
     {{-- Related Activity Reports --}}
 
     <div class="card shadow-sm mt-4">
