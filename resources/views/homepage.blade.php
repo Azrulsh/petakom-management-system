@@ -638,12 +638,12 @@
 
                         <div class="registration-options">
 
-                            <a href="{{ route('manage-registration.students.create') }}">
+                            <a href="{{ route('manage-registration.students.index') }}">
                                 <i class="fas fa-user-graduate"></i>
                                 Student Registration
                             </a>
 
-                            <a href="{{ route('manage-registration.lecturers.create') }}">
+                            <a href="{{ route('manage-registration.lecturers.index') }}">
                                 <i class="fas fa-chalkboard-teacher"></i>
                                 Lecturer Registration
                             </a>

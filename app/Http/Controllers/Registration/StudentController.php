@@ -61,6 +61,9 @@ class StudentController extends Controller
             $user->email = $validated['email'];
             $user->password = Hash::make(Str::random(40));
             $user->role = 'student';
+            $user->status = $validated['status'] === 'inactive'
+            ? 'inactive'
+            : 'active';
 
             $user->save();
 
@@ -103,21 +106,43 @@ class StudentController extends Controller
                 'required',
                 'string',
                 'max:50',
-                Rule::unique('students')->ignore($student->id),
+                Rule::unique('students', 'student_number')
+                    ->ignore($student->id),
             ],
-            'full_name' => 'required|string|max:255',
+            'full_name' => ['required', 'string', 'max:255'],
             'email' => [
                 'required',
                 'email',
-                Rule::unique('students')->ignore($student->id),
+                'max:255',
+                Rule::unique('students', 'email')
+                    ->ignore($student->id),
+                Rule::unique('users', 'email')
+                    ->ignore($student->user_id),
             ],
-            'phone' => 'nullable|string|max:30',
-            'programme' => 'required|string|max:255',
-            'year_of_study' => 'nullable|integer|min:1|max:10',
-            'status' => 'required|in:pending,active,inactive',
+            'phone' => ['nullable', 'string', 'max:30'],
+            'programme' => ['required', 'string', 'max:255'],
+            'year_of_study' => ['nullable', 'integer', 'min:1', 'max:10'],
+            'status' => ['required', 'in:pending,active,inactive'],
         ]);
 
-        $student->update($validated);
+        DB::transaction(function () use ($student, $validated) {
+
+            // Update Student information
+            $student->update($validated);
+
+            // Update associated User account
+            $user = $student->user;
+
+            if ($user) {
+                $user->update([
+                    'name' => $validated['full_name'],
+                    'email' => $validated['email'],
+                    'status' => $validated['status'] === 'inactive'
+                        ? 'inactive'
+                        : 'active',
+                ]);
+            }
+        });
 
         return redirect()
             ->route('manage-registration.students.index')
@@ -126,17 +151,35 @@ class StudentController extends Controller
 
     public function destroy(Student $student)
     {
-        if ($student->committee()->exists()) {
+        // Prevent deletion if related records exist.
+        if (
+            $student->committee()->exists() ||
+            $student->candidates()->exists()
+        ) {
             return back()->with(
                 'error',
-                'Cannot delete student with committee membership records.'
+                'Cannot delete student because committee or election records exist.'
             );
         }
 
-        $student->delete();
+        DB::transaction(function () use ($student) {
+
+            // Keep linked User account
+            $user = $student->user;
+
+            // Delete Student registration
+            $student->delete();
+
+            // Disable User login
+            if ($user) {
+                $user->status = 'inactive';
+                $user->save();
+            }
+        });
 
         return redirect()
             ->route('manage-registration.students.index')
-            ->with('success', 'Student deleted successfully.');
+            ->with('success', 'Student deleted and user account deactivated successfully.');
     }
+
 }

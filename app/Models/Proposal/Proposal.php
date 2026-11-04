@@ -63,6 +63,6 @@ class Proposal extends Model
     // Related Activity
     public function activity()
     {
-        return $this->hasOne(\App\Models\Activity\Activity::class);
+        return $this->hasOne(\App\Models\Activity::class);
     }
 }

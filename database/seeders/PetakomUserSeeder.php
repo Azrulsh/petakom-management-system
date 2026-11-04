@@ -61,7 +61,6 @@ class PetakomUserSeeder extends Seeder
         $student->user_id = $studentUser->id;
         $student->save();
 
-
         // =====================================
         // 3. LECTURER ACCOUNT
         // =====================================
@@ -73,16 +72,17 @@ class PetakomUserSeeder extends Seeder
         $lecturerUser->name = 'Test Lecturer';
         $lecturerUser->password = $password;
         $lecturerUser->role = 'lecturer';
+        $lecturerUser->status = 'active';
         $lecturerUser->email_verified_at = now();
         $lecturerUser->save();
-
 
         // Create Lecturer Registration Record
 
         $lecturer = Lecturer::firstOrNew([
-            'staff_number' => 'STAFF2026001',
+            'staff_number' => 'STAFF20260012',
         ]);
 
+        $lecturer->user_id = $lecturerUser->id;
         $lecturer->full_name = 'Test Lecturer';
         $lecturer->email = 'lecturer@petakom.test';
         $lecturer->phone = '0123456788';

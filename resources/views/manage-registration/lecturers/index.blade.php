@@ -132,10 +132,10 @@
                                         @csrf
                                         @method('DELETE')
 
-                                        <button class="btn btn-sm btn-danger">
-                                            Delete
-                                        </button>
-
+                                    <button type="submit" class="btn btn-sm btn-danger">
+                                        Delete
+                                    </button>
+                                       
                                     </form>
 
                                 </div>

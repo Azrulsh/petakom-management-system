@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Activity;
+namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Activity\Activity;
+use App\Models\Activity;
 use Illuminate\Http\Request;
 use App\Models\Proposal\Proposal;
 use Illuminate\Validation\ValidationException;

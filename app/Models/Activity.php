@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Models\Activity;
+namespace App\Models;
 
 use App\Models\User;
 use App\Models\Proposal\Proposal;

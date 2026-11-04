@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Calendar;
-use App\Models\Activity\Activity;
+use App\Models\Activity;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;

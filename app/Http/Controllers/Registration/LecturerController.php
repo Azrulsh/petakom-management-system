@@ -88,6 +88,7 @@ class LecturerController extends Controller
             $user->email = $validated['email'];
             $user->password = Hash::make(Str::random(40));
             $user->role = 'lecturer';
+            $user->status = $validated['status'];
 
             $user->save();
 
@@ -211,6 +212,7 @@ class LecturerController extends Controller
             if ($user) {
                 $user->name = $validated['full_name'];
                 $user->email = $validated['email'];
+                $user->status = $validated['status'];
 
                 $user->save();
             }
@@ -231,16 +233,16 @@ class LecturerController extends Controller
     {
         DB::transaction(function () use ($lecturer) {
 
+            // Keep linked User account
             $user = $lecturer->user;
 
+            // Delete Lecturer registration
+            $lecturer->delete();
+
+            // Disable User login
             if ($user) {
-
-                // Foreign key cascade deletes Lecturer.
-                $user->delete();
-
-            } else {
-
-                $lecturer->delete();
+                $user->status = 'inactive';
+                $user->save();
             }
         });
 
@@ -248,7 +250,7 @@ class LecturerController extends Controller
             ->route('manage-registration.lecturers.index')
             ->with(
                 'success',
-                'Lecturer and associated user account deleted successfully.'
+                'Lecturer deleted and user account deactivated successfully.'
             );
     }
 }

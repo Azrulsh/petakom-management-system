@@ -143,7 +143,7 @@ use App\Http\Controllers\Election\ElectionController;
 use App\Http\Controllers\Proposal\ProposalController;
 use App\Http\Controllers\Proposal\ActivityReportController;
 use App\Http\Controllers\Proposal\ProposalReportController;
-use App\Http\Controllers\Activity\ActivityController;
+use App\Http\Controllers\ActivityController;
 use App\Http\Controllers\Election\CandidateController;
 use App\Http\Controllers\BulletinController;
 
